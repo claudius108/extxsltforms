@@ -1,0 +1,60 @@
+eXSLTForms contains extension actions, elements and widgets that are not included into the XForms 1.1
+specification.
+
+A. Installation of eXSLTForms:
+1. Install the version 521 of XSLTForms from http://xsltforms.svn.sourceforge.net/viewvc/xsltforms/trunk/build/.
+2. Copy the exsltforms files within an folder called "exsltforms" and set the path to this folder in the file
+$exsltforms_HOME/config/exsltforms-config.xml (the value of 'exsltforms-base-uri' element).
+3. Modify the "extension" element of the config.xsl file located in xsltforms folder to look as follows:
+	<extensions> <!-- HTML elements to be added just after xsltforms.js and xsltforms.css loading -->
+		<beforeInit/>
+		<onBeginInit>
+xf_model_extensions = XsltForms_model.create(xsltforms_subform, "xf-model-extensions", null);
+XsltForms_instance.create(xsltforms_subform, "xf-instance-extensions", xf_model_extensions, false, 'application/xml', null, "&lt;extensionRoot/&gt;");
+XsltForms_xpath.create(xsltforms_subform,"instance('xf-instance-extensions')",false,new XsltForms_functionCallExpr('http://www.w3.org/2002/xforms instance',new XsltForms_cteExpr('xf-instance-extensions')));
+		</onBeginInit>
+		<onEndInit/>
+		<afterInit/>
+	</extensions>
+4. Modify the xsltforms.xsl file in XSLTForms folder as follows:
+	a. Insert <xsl:include href="/utils/exsltforms/core/exsltforms.xsl"/> as child of document root (set the URI as needed);
+	b. Insert <xsl:call-template name="eXSLTForms"/> before <xsl:copy-of select="$config/extensions/afterInit/*"/>.
+5. In order to use Data Instances Viewer, please add @eXSLTFormsDataInstancesViewer="true" to html element of the respective page.
+
+
+B. Installation of CKEditor:
+a. Install CKEditor's folder (version 3.2) to the desired location.
+b. Set the URI to editor's folder in $exsltforms_HOME/rte/rteConfigOptions.xml file.
+
+
+C. Installation of TinyMCE:
+a. Install TinyMCE's folder (version 3.3.5+) to the desired location.
+b. Set the URI to editor's folder in $exsltforms_HOME/rte/rteConfigOptions.xml file.
+
+
+D. Installation of EditArea:
+a. Install EditArea's folder (version 0.8.2) to the desired location.
+b. Copy the file $exsltforms_HOME/rte/EditArea/xquery.js from eXSLTForms package to /editarea/edit_area/reg_syntax folder.
+c. Set the URI to editor's folder in $exsltforms_HOME/rte/rteConfigOptions.xml file.
+
+
+E. Installation of YUI 3 and YUI 2in3 modules:
+a. Install YUI3 folder (version 3.1.0+) to the desired location.
+a. Install YUI2in3 folder (version 3.2.0) to the desired location. Select YUI2 version 2.8.0 from archive,
+as eXSLTForms works with it. Set neede URIs in $exsltforms_HOME/config/YUI-config.xml.
+c. In order to use YUI2 editors, set the URI to editor's folder in $exsltforms_HOME/rte/rteConfigOptions.xml file.
+
+
+F. Installation of Dojo Editor:
+a. Install Dojo folder (version 1.4.2) to the desired location.
+b. Set the URI to editor's folder in $exsltforms_HOME/rte/rteConfigOptions.xml file.
+
+
+G. Installation of Dojo Editor:
+a. Install Dojo folder (version 1.4.2) to the desired location.
+b. Set the URI to editor's folder in $exsltforms_HOME/rte/rteConfigOptions.xml file.
+
+
+H. Installation of Xinha Editor:
+a. Install Xinha folder (version 0.96.1) to the desired location.
+b. Set the URI to editor's folder in $exsltforms_HOME/rte/rteConfigOptions.xml file.
