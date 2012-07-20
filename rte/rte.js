@@ -8,7 +8,7 @@ exsltforms.rte = {
   	//function to register editors
 	registerEditors : function() {
 		exsltforms.utils.pollingConditions[ 'textarea2rte_register' ] = {
-			testedValue: function() { return ( xforms.body != null ) },
+			testedValue: function() { return ( XsltForms_globals.body != null ) },
 			executedFunction: function() {
 				var textareas = document.getElementsByTagName("textarea");
 				for (var i=0; i < textareas.length; ++i) {
@@ -16,6 +16,7 @@ exsltforms.rte = {
 					if ( textarea.attributes[ 'appearance' ] ) {
 						if ( textarea.attributes[ 'appearance' ].nodeValue.substring(0, 5) == 'exfk:') {
 							var editorID = textarea.attributes[ 'id' ].nodeValue;
+							//alert(editorID);
 							if ( editorID in exsltforms.registry.textarea2rte ) {
 								} else {
 									var clonedEditorID = textarea.attributes[ 'oldid' ].nodeValue;
@@ -160,7 +161,7 @@ exsltforms.rte = {
 		processContentOnSave	: function( editorContent ) {return editorContent.replace(/&nbsp;/gi, "&#160;");},
 		processContentOnUpdate	: function( editorContent ) {return editorContent;},
 		addXFupdateListener	: function( editorID ) {
-			new Listener( document.getElementById( exsltforms.registry.textarea2rte[ editorID ].XFtextareaID ), "xforms-value-changed", null, function( evt ) {
+			new XsltForms_listener( document.getElementById( exsltforms.registry.textarea2rte[ editorID ].XFtextareaID ), "xforms-value-changed", null, function( evt ) {
 				exsltforms.rte.generalFunctions.updateEditorContent( editorID );
 			});
 		},

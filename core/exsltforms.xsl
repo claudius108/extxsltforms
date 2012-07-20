@@ -25,20 +25,20 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 	-->
 <xsl:stylesheet xmlns:exfk="http://kuberam.ro/exsltforms" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:exslt="http://exslt.org/common" xmlns:xalan="http://xml.apache.org/xalan" xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xforms="http://www.w3.org/2002/xforms" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" exclude-result-prefixes="xhtml xforms ev exfk">
     <xsl:output method="html" encoding="utf-8" omit-xml-declaration="no" indent="no" doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"/>
-    <xsl:variable name="eXSLTFormsConfigOptions">
+    <xsl:variable name="exsltformsConfigOptions">
         <xsl:copy-of select="document('../config/exsltforms-config.xml')/*"/>
     </xsl:variable>
-    <xsl:template name="eXSLTForms">
+    <xsl:template name="exsltforms">
         <xsl:variable name="exsltformsBaseURI">
 		<xsl:choose>
 			<xsl:when test="function-available('xalan:nodeset')">
-				<xsl:apply-templates select="xalan:nodeset($eXSLTFormsConfigOptions)/exsltforms-config-options/exsltforms-base-uri"/>
+				<xsl:apply-templates select="xalan:nodeset($exsltformsConfigOptions)/exsltforms-config-options/exsltforms-base-uri"/>
 			</xsl:when>
 			<xsl:when test="function-available('exslt:node-set')">
-				<xsl:apply-templates select="exslt:node-set($eXSLTFormsConfigOptions)/exsltforms-config-options/exsltforms-base-uri"/>
+				<xsl:apply-templates select="exslt:node-set($exsltformsConfigOptions)/exsltforms-config-options/exsltforms-base-uri"/>
 			</xsl:when>
 			<xsl:when test="function-available('msxsl:node-set')">
-				<xsl:apply-templates select="msxsl:node-set($eXSLTFormsConfigOptions)/exsltforms-config-options/exsltforms-base-uri"/>
+				<xsl:apply-templates select="msxsl:node-set($exsltformsConfigOptions)/exsltforms-config-options/exsltforms-base-uri"/>
 			</xsl:when>
 		</xsl:choose>
         </xsl:variable>
@@ -48,7 +48,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
             <script src="{$exsltformsBaseURI}rte/rte.js" type="text/javascript">/* */</script>
             <xsl:variable name="rteConfigOptions">
                 <rteConfigOptions>
-                    <xsl:copy-of select="document('rte/rteConfigOptions.xml')/rteConfigOptions/*"/>
+                    <xsl:copy-of select="document('../rte/rteConfigOptions.xml')/rteConfigOptions/*"/>
                 </rteConfigOptions>
             </xsl:variable>
             <xsl:variable name="editorTypesOnPage">
@@ -63,21 +63,21 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
             </xsl:for-each>
             <script type="text/javascript">
 <!-- 		<![CDATA[ -->
-				eXSLTForms.rte.registerEditors();
+				exsltforms.rte.registerEditors();
 <!-- 			]]> -->
             </script>
         </xsl:if>
         <xsl:if test="//xforms:textarea[starts-with(@appearance, 'exfk:YUI')] | //xhtml:table[starts-with(@appearance, 'exfk:YUI')]">
 		<!--load YUI 3 config file-->
-            <xsl:variable name="YUI3-config-options" select="document('config/YUI-config.xml')/config-options"/>
+            <xsl:variable name="YUI3-config-options" select="document('../config/YUI-config.xml')/config-options"/>
             <script type="text/javascript" src="{$YUI3-config-options/YUI3-seed-URI}" charset="utf-8">/**/</script>
             <script type="text/javascript" charset="utf-8">
-			eXSLTForms.registry[ 'YUI2in3base' ] = '<xsl:value-of select="$YUI3-config-options/YUI2in3-base"/>';
+			exsltforms.registry[ 'YUI2in3base' ] = '<xsl:value-of select="$YUI3-config-options/YUI2in3-base"/>';
 			var YGlobal = YUI({
 				filter: 'debug',
 				groups: {
 					yui2: {
-						base: eXSLTForms.registry.YUI2in3base,
+						base: exsltforms.registry.YUI2in3base,
 						patterns:  {
 							'yui2-': {
 							configFn: function(me) {
@@ -208,14 +208,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
             </xsl:with-param>
         </xsl:call-template>
         <script type="text/javascript">
-			eXSLTForms.registry.textarea2rte['<xsl:value-of select="$idExtElem"/>'] = {
+			exsltforms.registry.textarea2rte['<xsl:value-of select="$idExtElem"/>'] = {
 				editorType			:	'<xsl:value-of select="$editorType"/>',
 				id 				:	'<xsl:value-of select="$idExtElem"/>',
 				XFtextareaID			:	'<xsl:value-of select="$XFtextareaID"/>',
 				incremental			:	'<xsl:value-of select="@incremental"/>',
 				editorContentModified		:	'no',
-				processContentOnSave		:	eXSLTForms.rte.generalFunctions.processContentOnSave,
-				processContentOnUpdate		:	eXSLTForms.rte.generalFunctions.processContentOnUpdate,
+				processContentOnSave		:	exsltforms.rte.generalFunctions.processContentOnSave,
+				processContentOnUpdate		:	exsltforms.rte.generalFunctions.processContentOnUpdate,
 				nativeConfigOptionsObject	:	<xsl:value-of select="xforms:extension/exfk:rteOptions"/>,
 				nativeConfigOptionsString	:	"<xsl:value-of select="normalize-space(xforms:extension/exfk:rteOptions)"/>"
 			};
@@ -260,8 +260,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
             </xsl:call-template>
 		YGlobal.use( 'yui2-datatable', 'datatype', 'yui2-datasource', 'yui2-paginator', 'yui2-menu', function (Y) {
 			var YAHOO = Y.YUI2,
-				datatables = eXSLTForms.registry.datatables,
-				datasources = eXSLTForms.registry.datasources;
+				datatables = exsltforms.registry.datatables,
+				datasources = exsltforms.registry.datasources;
 
 			//define formatters
 			<xsl:for-each select="xforms:extension/exfk:formatters/exfk:formatter">
@@ -325,12 +325,12 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 		
 //TO DO:		//setting of context menu							
 
-			//registering myDataTable and myDataSource in eXSLTForms registry
+			//registering myDataTable and myDataSource in exsltforms registry
 			datatables[ '<xsl:value-of select="$elementID"/>' ] = myDataTable;
 			datasources[ '<xsl:value-of select="$elementID"/>' ] = myDataSource;
 
 			//get data
-			eXSLTForms.utils.pollingConditions[ 'get-<xsl:value-of select="$elementID"/>-source' ] = {
+			exsltforms.utils.pollingConditions[ 'get-<xsl:value-of select="$elementID"/>-source' ] = {
 				testedValue: function() { return ( xforms.defaultModel != null ) },
 				executedFunction: function() {
 					var sourceString = "",
@@ -347,7 +347,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 					});
 				}
 			};
-			eXSLTForms.utils.poll( 'get-<xsl:value-of select="$elementID"/>-source' );
+			exsltforms.utils.poll( 'get-<xsl:value-of select="$elementID"/>-source' );
 			
 		});
 	</script>
@@ -376,8 +376,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
                 <xsl:with-param name="ps" select="exslt:node-set($kxexprs)/xexprs"/>
             </xsl:call-template>
 		YGlobal.use( 'datatype', 'datatable-base', 'datatable-datasource', 'datasource-local', 'datasource-xmlschema', 'datatable-sort', function (Y) {
-			var datatables = eXSLTForms.registry.datatables;
-			var datasources = eXSLTForms.registry.datasources;
+			var datatables = exsltforms.registry.datatables;
+			var datasources = exsltforms.registry.datasources;
 
 			//define formatters
 			<xsl:for-each select="xforms:extension/exfk:formatters/exfk:formatter">
@@ -447,11 +447,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 				myDataTable.on("cellClickEvent", myDataTable.onEventShowCellEditor);
 			</xsl:if>
 
-			//registering myDataTable and myDataSource in eXSLTForms registry
+			//registering myDataTable and myDataSource in exsltforms registry
 			datatables[ '<xsl:value-of select="$elementID"/>' ] = myDataTable;
 			datasources[ '<xsl:value-of select="$elementID"/>' ] = myDataSource;
 			//get data
-			eXSLTForms.utils.pollingConditions[ 'get-<xsl:value-of select="$elementID"/>-source' ] = {
+			exsltforms.utils.pollingConditions[ 'get-<xsl:value-of select="$elementID"/>-source' ] = {
 				testedValue: function() { return ( xforms.ready ) },
 				executedFunction: function() {
 					var sourceString = "";
@@ -465,7 +465,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 					datatables[ '<xsl:value-of select="$elementID"/>' ].datasource.load();
 				}
 			};
-			eXSLTForms.utils.poll( 'get-<xsl:value-of select="$elementID"/>-source' );
+			exsltforms.utils.poll( 'get-<xsl:value-of select="$elementID"/>-source' );
 
 		});
 	</script>
