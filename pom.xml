@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>ro.kuberam</groupId>
+		<groupId>ro.kuberam.maven</groupId>
 		<artifactId>js-libs</artifactId>
 		<version>0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>exsltforms</artifactId>
+	<artifactId>extxsltforms</artifactId>
 	<version>1.1.0</version>
 	<packaging>pom</packaging>
 	<name>exsltforms</name>
