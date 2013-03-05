@@ -14,11 +14,65 @@
 	<packaging>pom</packaging>
 	<name>exsltforms</name>
 
+	<properties>
+		<xsltforms-dir-path>${basedir}/tests/resources/xsltforms</xsltforms-dir-path>
+	</properties>
+
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>xml-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>update-config.xsl</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>transform</goal>
+						</goals>
+						<configuration>
+							<forceCreation>true</forceCreation>
+							<transformationSets>
+								<transformationSet>
+									<dir>${xsltforms-dir-path}</dir>
+									<includes>
+										<include>config.xsl</include>
+									</includes>
+									<stylesheet>${basedir}/tests/resources/update-xsltforms/update-config-file.xsl</stylesheet>
+<!-- 									<fileMappers> -->
+<!-- 										<fileMapper implementation="org.codehaus.plexus.components.io.filemappers.RegExpFileMapper"> -->
+<!-- 											<pattern>^(.*)\.xml$</pattern> -->
+<!-- 											<replacement>index.html</replacement> -->
+<!-- 										</fileMapper> -->
+<!-- 									</fileMappers> -->
+<!-- 									<outputDir>${xsltforms-dir-path}</outputDir> -->
+								</transformationSet>
+							</transformationSets>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>add-xsltforms-to-utils</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<echo>Add xsltforms to utils</echo>
+								<delete dir="${xsltforms-dir-path}"/>
+								<copy todir="${xsltforms-dir-path}">
+									<fileset dir="${js-libs-dir-path}/xsltforms" />
+								</copy>
+							</target>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
