@@ -33,9 +33,7 @@
 		<!--set the URI to the CKEditor folder-->
 <!-- 		<script type="text/javascript" src="http://ckeditor.com/apps/ckeditor/3.2.1/ckeditor.js?1274094918">/* */</script>		 -->
 		<initialize>
-			<script type="text/javascript" src="../../../utils/ckeditor/ckeditor.js">/* */</script>
-			<!--this is needed just for tei-ann-->
-			<script type="text/javascript" src="../../../utils/ckeditor/plugins/tei-ann/core/tei-ann.js">/* */</script>
+			<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.0.1/ckeditor.js ">/* */</script>
 		</initialize>
 	</editor>
 	<editor type="EditArea">
