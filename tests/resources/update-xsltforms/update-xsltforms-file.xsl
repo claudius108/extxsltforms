@@ -5,7 +5,7 @@
 	<xsl:template match="rdf:RDF">
 		<xsl:copy-of select="." />
 		<xsl:element name="xsl:include" namespace="http://www.w3.org/1999/XSL/Transform">
-			<xsl:attribute name="href">../../core/exsltforms.xsl</xsl:attribute>
+			<xsl:attribute name="href">../../../core/exsltforms.xsl</xsl:attribute>
 		</xsl:element>
 	</xsl:template>
 	<xsl:template match="xsl:copy-of[@select = '$script/config/extensions/afterInit/*']">

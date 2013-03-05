@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="../../../utils/xsltforms/xsltforms.xsl" type="text/xsl"?>
+<?xml-stylesheet href="../resources/xsltforms/xsltforms.xsl" type="text/xsl"?>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:exfk="http://kuberam.ro/exsltforms" xmlns:xf="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events">
     <head>
-        <title>Sample - CKEditor</title>
+        <title>CKEditor</title>
         <style language="text/css">
 		@namespace xf url("http://www.w3.org/2002/xforms");
 		#triggerHome {float:left; margin-bottom:25px;}

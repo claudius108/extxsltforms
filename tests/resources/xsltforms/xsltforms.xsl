@@ -28,7 +28,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 			<dcterms:description>Fixes for multipart/related</dcterms:description>
 			<dcterms:format>text/xsl</dcterms:format>
 		</rdf:Description>
-	</rdf:RDF><xsl:include href="../../core/exsltforms.xsl"/><xsl:output method="html" encoding="utf-8" omit-xml-declaration="no" indent="no" doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"/>
+	</rdf:RDF><xsl:include href="../../../core/exsltforms.xsl"/><xsl:output method="html" encoding="utf-8" omit-xml-declaration="no" indent="no" doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN" doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"/>
 		
 		
 		<xsl:param name="baseuri"/>
