@@ -26,7 +26,7 @@
 				<executions>
 					<execution>
 						<id>update-config.xsl</id>
-						<phase>generate-sources</phase>
+						<phase>process-sources</phase>
 						<goals>
 							<goal>transform</goal>
 						</goals>
@@ -39,13 +39,27 @@
 										<include>config.xsl</include>
 									</includes>
 									<stylesheet>${basedir}/tests/resources/update-xsltforms/update-config-file.xsl</stylesheet>
-<!-- 									<fileMappers> -->
-<!-- 										<fileMapper implementation="org.codehaus.plexus.components.io.filemappers.RegExpFileMapper"> -->
-<!-- 											<pattern>^(.*)\.xml$</pattern> -->
-<!-- 											<replacement>index.html</replacement> -->
-<!-- 										</fileMapper> -->
-<!-- 									</fileMappers> -->
-<!-- 									<outputDir>${xsltforms-dir-path}</outputDir> -->
+									<outputDir>${xsltforms-dir-path}</outputDir>
+								</transformationSet>
+							</transformationSets>
+						</configuration>
+					</execution>
+					<execution>
+						<id>update-xsltforms.xsl</id>
+						<phase>process-sources</phase>
+						<goals>
+							<goal>transform</goal>
+						</goals>
+						<configuration>
+							<forceCreation>true</forceCreation>
+							<transformationSets>
+								<transformationSet>
+									<dir>${xsltforms-dir-path}</dir>
+									<includes>
+										<include>xsltforms.xsl</include>
+									</includes>
+									<stylesheet>${basedir}/tests/resources/update-xsltforms/update-xsltforms-file.xsl</stylesheet>
+									<outputDir>${xsltforms-dir-path}</outputDir>
 								</transformationSet>
 							</transformationSets>
 						</configuration>
@@ -65,7 +79,7 @@
 						<configuration>
 							<target>
 								<echo>Add xsltforms to utils</echo>
-								<delete dir="${xsltforms-dir-path}"/>
+								<delete dir="${xsltforms-dir-path}" />
 								<copy todir="${xsltforms-dir-path}">
 									<fileset dir="${js-libs-dir-path}/xsltforms" />
 								</copy>

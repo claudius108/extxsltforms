@@ -2,7 +2,8 @@ exsltforms contains extension actions, elements and widgets that are not include
 specification.
 
 A. Installation of eXSLTForms:
-1. Install the version 521 of XSLTForms from http://xsltforms.svn.sourceforge.net/viewvc/xsltforms/trunk/build/.
+1. Install XSLTForms from http://xsltforms.svn.sourceforge.net/viewvc/xsltforms/trunk/build/; the version is mentioned in the readme file, within the section for current version
+of exsltforms (or you can use the XSLTForms bundled with exsltforms in directory $exsltforms-home/tests/resources/xsltforms).
 2. Copy the exsltforms files within an folder called "exsltforms" and set the path to this folder in the file
 $exsltforms_HOME/config/exsltforms-config.xml (the value of 'exsltforms-base-uri' element).
 3. Modify the "extension" element of the config.xsl file located in xsltforms folder to look as follows:
