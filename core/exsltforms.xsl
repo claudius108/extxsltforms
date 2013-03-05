@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-Copyright (C) 2009-2010 kuberam.ro - Claudius Teodorescu
-Contact at : claud108@yahoo.com
+Copyright (C) 2009-2013 kuberam.ro - Claudius Teodorescu
+Contact at : claudius.teodorescu@gmail.com
 
 Copyright (C) 2008-2009 agenceXML - Alain COUTHURES
 Contact at : info@agencexml.com
@@ -48,7 +48,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
             <script src="{$exsltformsBaseURI}rte/rte.js" type="text/javascript">/* */</script>
             <xsl:variable name="rteConfigOptions">
                 <rteConfigOptions>
-                    <xsl:copy-of select="document('../rte/rteConfigOptions.xml')/rteConfigOptions/*"/>
+                    <xsl:copy-of select="document('../rte/rte-config.xml')/rteConfigOptions/*"/>
                 </rteConfigOptions>
             </xsl:variable>
             <xsl:variable name="editorTypesOnPage">
