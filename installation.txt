@@ -18,7 +18,7 @@ XsltForms_xpath.create(xsltforms_subform,"instance('xf-instance-extensions')",fa
 	</extensions>
 4. Modify the xsltforms.xsl file in XSLTForms folder as follows:
 	a. Insert <xsl:include href="/utils/exsltforms/core/exsltforms.xsl"/> as child of document root (set the URI as needed);
-	b. Insert <xsl:call-template name="exsltforms"/> before <xsl:copy-of select="$config/extensions/afterInit/*"/>.
+	b. Insert <xsl:call-template name="exsltforms"/> before <xsl:copy-of select="$script/config/extensions/afterInit/*"/>.
 5. In order to use Data Instances Viewer, please add @eXSLTFormsDataInstancesViewer="true" to html element of the respective page.
 
 
