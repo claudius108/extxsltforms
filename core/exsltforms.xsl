@@ -156,55 +156,66 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
         <xsl:value-of select="concat('new XsltForms_listener(document.getElementById(&#34;xf-model-extensions&#34;),&#34;xforms-replace-delete_replace', $idExtElem, '&#34;,null,function(evt) {XsltForms_browser.run(', $idDeleteElem, ',XsltForms_browser.getId(evt.currentTarget ? evt.currentTarget : evt.target),evt,false,true);});')"/>
         <xsl:apply-templates select="*" mode="script"/>
     </xsl:template>
-<xsl:template match="xforms:action" mode="script" priority="2">
-	<xsl:apply-templates select="*" mode="script"/>
-	<xsl:variable name="idaction" select="count(preceding::xforms:action|ancestor::xforms:action)"/>
-	<xsl:text>var </xsl:text>
-	<xsl:value-of select="$vn_pf"/>
-	<xsl:text>action_</xsl:text>
-	<xsl:value-of select="$idaction"/>
-	<xsl:text> = new XsltForms_action(</xsl:text>
-	<xsl:value-of select="$vn_subform"/>
-	<xsl:text>,</xsl:text>
-	<xsl:call-template name="toScriptParam"><xsl:with-param name="p" select="@if"/></xsl:call-template>
-	<xsl:text>,</xsl:text>
-	<xsl:call-template name="toScriptParam"><xsl:with-param name="p" select="@while"/></xsl:call-template>
-	<xsl:text>,</xsl:text>
-	<xsl:call-template name="toScriptParam"><xsl:with-param name="p" select="@iterate"/></xsl:call-template>
-	<xsl:text>)</xsl:text>
-	<xsl:for-each select="xforms:setvalue|xforms:insert|xforms:delete|xforms:action|xforms:toggle|xforms:send|xforms:setfocus|xforms:setindex|xforms:load|xforms:message|xforms:dispatch|xforms:reset|xforms:show|xforms:hide|xforms:script|xforms:unload|xforms:transform|xforms:replace">
-		<xsl:text>.add(</xsl:text>
-		<xsl:value-of select="$vn_pf"/>
-		<xsl:variable name="lname" select="local-name()"/>
-		<xsl:variable name="nsuri" select="namespace-uri()"/>
-		<xsl:value-of select="$lname"/>
-		<xsl:text>_</xsl:text>
-		<xsl:value-of select="count(preceding::*[local-name()=$lname and namespace-uri()=$nsuri]|ancestor::*[local-name()=$lname and namespace-uri()=$nsuri])"/>
-		<xsl:text>)</xsl:text>
-	</xsl:for-each>
-	<xsl:text>;
-</xsl:text>
-</xsl:template>
+    
+		<xsl:template match="xforms:action" mode="script" priority="1">
+			<xsl:param name="parentworkid"/>
+			<xsl:param name="workid" select="concat(position(),'_',$parentworkid)"/>
+			<xsl:apply-templates select="@*" mode="scriptattr"/>
+			<xsl:apply-templates select="node()" mode="script">
+				<xsl:with-param name="parentworkid" select="$workid"/>
+			</xsl:apply-templates>
+			<js>
+				<xsl:text>var </xsl:text>
+				<xsl:value-of select="$vn_pf"/>
+				<xsl:text>action_</xsl:text>
+				<xsl:value-of select="$workid"/>
+				<xsl:text> = new XsltForms_action(</xsl:text>
+				<xsl:value-of select="$vn_subform"/>
+				<xsl:text>,</xsl:text>
+				<xsl:call-template name="toScriptParam"><xsl:with-param name="p" select="@if"/></xsl:call-template>
+				<xsl:text>,</xsl:text>
+				<xsl:call-template name="toScriptParam"><xsl:with-param name="p" select="@while"/></xsl:call-template>
+				<xsl:text>,</xsl:text>
+				<xsl:call-template name="toScriptParam"><xsl:with-param name="p" select="@iterate"/></xsl:call-template>
+				<xsl:text>)</xsl:text>
+				<xsl:for-each select="node()">
+					<xsl:if test="contains(':setvalue:insert:delete:action:toggle:send:setfocus:setindex:setnode:load:message:dispatch:rebuild:reset:show:hide:script:unload:transform:replace',concat(':',local-name(),':'))">
+						<xsl:text>.add(</xsl:text>
+						<xsl:value-of select="$vn_pf"/>
+						<xsl:value-of select="local-name()"/>
+						<xsl:text>_</xsl:text>
+						<xsl:value-of select="concat(position(),'_',$workid)"/>
+						<xsl:text>)</xsl:text>
+					</xsl:if>
+				</xsl:for-each>
+				<xsl:text>;</xsl:text>
+			</js>
+		</xsl:template>
+
     <xsl:template match="xforms:textarea[starts-with(@appearance, 'exfk:')]" priority="3">
         <xsl:param name="appearance" select="false()"/>
+        <xsl:param name="parentworkid"/>
+        <xsl:param name="workid" select="concat(position(),'_',$parentworkid)"/>
+                
         <xsl:variable name="idinput" select="count(preceding::xforms:textarea|ancestor::xforms:textarea)"/>
         <xsl:variable name="editorType" select="substring-after(@appearance, ':')"/>
-        <xsl:variable name="idExtElem" select="concat($editorType, '_', $idinput)"/>
+        <xsl:variable name="idExtElem" select="concat($editorType, '_', $workid)"/>
         <xsl:variable name="XFtextareaID">
             <xsl:choose>
                 <xsl:when test="@id">
                     <xsl:value-of select="@id"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:text>xf-textarea-</xsl:text>
-                    <xsl:value-of select="$idinput"/>
+                    <xsl:text>xsltforms-mainform-textarea-</xsl:text>
+                    <xsl:value-of select="$workid"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
         <xsl:call-template name="field">
+        	<xsl:with-param name="workid" select="$workid"/>
             <xsl:with-param name="appearance" select="$appearance"/>
             <xsl:with-param name="body">
-                <textarea id="{$idExtElem}" appearance="{@appearance}"/>
+                <textarea><xsl:copy-of select="@*[local-name() != 'ref']"/><xsl:call-template name="comun"/><xsl:text/> </textarea>
             </xsl:with-param>
         </xsl:call-template>
         <script type="text/javascript">
