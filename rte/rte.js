@@ -77,15 +77,6 @@ exsltforms.rte = {
 //							alert('a');
 //						});						
 					break;
-					case "TinyMCE":
-						var editorGenerator = new tinymce.Editor( editorID, nativeConfigOptionsObject );
-						if ( exsltforms.registry.textarea2rte[ editorID ].incremental == 'true' ) {
-							editorGenerator.onChange.add(function() {exsltforms.rte.generalFunctions.saveEditorContent( editorID, this.contentDocument.activeElement.innerHTML );});
-						}
-						editorGenerator.onPostRender.add(function() {exsltforms.rte.specificFunctions.saveTinyMCEContent( this ); });
-						specificFunctions[exsltforms.registry.textarea2rte[editorID].editorType].beforeRendering(exsltforms.registry.textarea2rte[editorID].nativeConfigOptionsObject);
-						editorGenerator.render();
-					break;
 					case "EditArea":
 						var nativeConfigOptionsStringProcessed = nativeConfigOptionsString.substring(nativeConfigOptionsString.indexOf('{') + 1, nativeConfigOptionsString.lastIndexOf('}'));
 						specificFunctions[ exsltforms.registry.textarea2rte[ editorID ].editorType ].beforeRendering( exsltforms.registry.textarea2rte[ editorID ].nativeConfigOptionsObject );
@@ -132,10 +123,6 @@ exsltforms.rte = {
 			setEditorContent : function( editorID, editorContent ) { editAreaLoader.setValue( editorID, exsltforms.registry.textarea2rte[ editorID ].processContentOnUpdate( editorContent ) ); },
 			beforeRendering : function( nativeConfigOptionsObject ) {}
 		},
-		TinyMCE : {
-			setEditorContent : function( editorID, editorContent ) { tinymce.editors[ editorID ].setContent( exsltforms.registry.textarea2rte[ editorID ].processContentOnUpdate( editorContent ) ); },
-			beforeRendering : function( nativeConfigOptionsObject ) {}
-		},
 		YUIEditor : {
 			setEditorContent : function( editorID, editorContent ) { YAHOO.widget.EditorInfo._instances[ editorID ].setEditorHTML( exsltforms.registry.textarea2rte[ editorID ].processContentOnUpdate( editorContent ) ); },
 			beforeRendering : function( nativeConfigOptionsObject ) {}
@@ -146,13 +133,6 @@ exsltforms.rte = {
 		},
 		saveEditAreaContent : function( editorID, editorContent ) {
 			exsltforms.rte.generalFunctions.saveEditorContent( editorID, editorContent );
-		},
-		saveTinyMCEContent : function( editor ) {
-			if (tinymce.isIE) {
-				tinymce.dom.Event.add(editor.getWin(), 'blur', function(e) { exsltforms.rte.generalFunctions.saveEditorContent( editor.editorId, editor.contentDocument.activeElement.innerHTML ); });
-				} else {
-					tinymce.dom.Event.add(editor.getDoc(), 'blur', function(e) { exsltforms.rte.generalFunctions.saveEditorContent( editor.editorId, editor.contentDocument.activeElement.innerHTML ); });
-			}
 		},
 		saveDojoContent : function( editorID ) {
 			
