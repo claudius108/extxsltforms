@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-    Copyright (C) 2010 kuberam.ro - Claudius Teodorescu. All rights reserved.
-    Released under LGPL License - http://gnu.org/licenses/lgpl.html.
--->
+<!-- Copyright (C) 2010 kuberam.ro - Claudius Teodorescu. All rights reserved. Released under LGPL License - http://gnu.org/licenses/lgpl.html. -->
 <rteConfigOptions>
 	<editor type="YUIEditor">
-		<!--set the URI to the YUI folder-->
+		<!--set the URI to the YUI folder -->
 		<initialize>
-	<!-- 		<script src="http://yui.yahooapis.com/2.8.1/build/yuiloader/yuiloader-min.js">/* */</script> -->			
+			<!-- <script src="http://yui.yahooapis.com/2.8.1/build/yuiloader/yuiloader-min.js">/* */</script> -->
 			<script type="text/javascript" src="../../../utils/yui/build/yuiloader/yuiloader.js">/* */</script>
 			<script type="text/javascript">
 				<![CDATA[
@@ -36,9 +33,9 @@
 		</initialize>
 	</editor>
 	<editor type="EditArea">
-		<!--set the URI to the EditArea folder-->
+		<!--set the URI to the EditArea folder -->
 		<initialize>
-			<script type="text/javascript" src="../../../utils/editarea/edit_area/edit_area_full.js">/* */</script>
+			<script type="text/javascript" src="http://cdolivet.com/editarea/editarea/edit_area/edit_area_full.js">/* */</script>
 		</initialize>
 	</editor>
 	<editor type="DojoEditor">
@@ -74,22 +71,17 @@
 			</script>
 		</initialize>
 	</editor>
-	<editor type="TinyMCE">
-		<!--set the URI to the TinyMCE folder-->
-		<initialize>
-	<!-- 		<script type="text/javascript" src="http://tinymce.moxiecode.com/js/tinymce/jscripts/tiny_mce/tiny_mce.js">/* */</script> -->
-			<script type="text/javascript" src="../../../utils/tinymce/jscripts/tiny_mce/tiny_mce.js">/* */</script>
-		</initialize>
-	</editor>
 	<editor type="Xinha">
 		<initialize>
 			<script type="text/javascript">
-				_editor_url  = "../../../utils/xinha/"  //(preferably absolute) URL (including trailing slash) where Xinha is installed
-				//_editor_url  = "http://xinha.raimundmeyer.de/latest/"
-				_editor_lang = "en";     //And the language we need to use in the editor.
+				_editor_url = "../../../utils/xinha/" //(preferably absolute) URL (including trailing slash)
+				where Xinha is installed
+				//_editor_url = "http://xinha.raimundmeyer.de/latest/"
+				_editor_lang = "en"; //And the
+				language we need to use in the editor.
 			</script>
 			<script type="text/javascript" src="../../../utils/xinha/XinhaLoader.js">/* */</script>
-<!-- 			<script type="text/javascript" src="http://xinha.raimundmeyer.de/latest/XinhaLoader.js">/* */</script> -->
+			<!-- <script type="text/javascript" src="http://xinha.raimundmeyer.de/latest/XinhaLoader.js">/* */</script> -->
 			<script type="text/javascript">
 				<![CDATA[
 					 //exsltforms.rte.specificFunctions[ exsltforms.registry.textarea2rte[ editorID ].editorType ].beforeRendering( exsltforms.registry.textarea2rte[ editorID ].nativeConfigOptionsObject );
