@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="../resources/xsltforms/xsltforms.xsl" type="text/xsl"?>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:exfk="http://kuberam.ro/exsltforms" xmlns:xf="http://www.w3.org/2002/xforms" xmlns:ev="http://www.w3.org/2001/xml-events">
-    <head>
-        <title>CKEditor</title>
-        <style language="text/css">
-		@namespace xf url("http://www.w3.org/2002/xforms");
-		#outputSavedContent .xforms-label {margin-bottom:25px;font: bold 14px verdana;}
-</style>
-        <xf:model id="m">
-            <xf:instance id="i0">
-                <v xmlns="">
-                    <description>
-				&lt;p&gt;&lt;strong&gt;&lt;span style="font-size: 16px;"&gt;Instructions for testing the integration of CKEditor into XSLTForms&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
-				&lt;p&gt;In order to save the editor content to bounded node, please modify this text and leave the editor.&lt;/p&gt;
-			</description>
-                </v>
-            </xf:instance>
-        </xf:model>
-    </head>
-    <body>
-        <p>
-            <xf:output id="outputSavedContent" ref="instance('i0')/description">
-                <xf:label>Saved editor content: </xf:label>
-            </xf:output>
-        </p>
-        <p>
-            <xf:textarea ref="instance('i0')/description" appearance="exfk:CKEditor" incremental="true">
-                <xf:label>CKEditor editor 1 (it has @incremental = "true"):</xf:label>
-                <xf:extension>
-                    <exfk:rteOptions>{}</exfk:rteOptions>
-                </xf:extension>
-            </xf:textarea>
-        </p>
-        <xf:textarea ref="instance('i0')/description" appearance="exfk:CKEditor">
-            <xf:label>CKEditor editor 2:</xf:label>
-            <xf:extension>
-                <exfk:rteOptions>{}</exfk:rteOptions>
-            </xf:extension>
-        </xf:textarea>
-    </body>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:exfk="http://kuberam.ro/exsltforms" xmlns:xf="http://www.w3.org/2002/xforms"
+	xmlns:ev="http://www.w3.org/2001/xml-events">
+	<head>
+		<title>CKEditor</title>
+		<style language="text/css">
+			@namespace xf url("http://www.w3.org/2002/xforms");
+			#outputSavedContent .xforms-label {margin-bottom:25px;font: bold 14px verdana;}
+		</style>
+		<xf:model id="m">
+			<xf:instance id="i0">
+				<v xmlns="">
+					<description>&lt;p&gt;&lt;strong&gt;&lt;span style="font-size: 16px;"&gt;Instructions for testing the integration
+						of CKEditor into XSLTForms&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;In order to save the editor content to
+						bounded node, please modify this text and leave the editor.&lt;/p&gt;</description>
+				</v>
+			</xf:instance>
+		</xf:model>
+	</head>
+	<body>
+		<p>
+			<xf:output id="outputSavedContent" ref="instance('i0')/description">
+				<xf:label>Saved editor content: </xf:label>
+			</xf:output>
+		</p>
+		<p>
+			<xf:textarea ref="instance('i0')/description" appearance="exfk:CKEditor" incremental="true">
+				<xf:label>CKEditor editor 1 (it has @incremental = "true"):</xf:label>
+				<xf:extension>
+					<exfk:rteOptions>{}</exfk:rteOptions>
+				</xf:extension>
+			</xf:textarea>
+		</p>
+		<xf:textarea ref="instance('i0')/description" appearance="exfk:CKEditor">
+			<xf:label>CKEditor editor 2:</xf:label>
+			<xf:extension>
+				<exfk:rteOptions>{}</exfk:rteOptions>
+			</xf:extension>
+		</xf:textarea>
+	</body>
 </html>

@@ -3724,7 +3724,68 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 		</xsl:template>
 	
 		
-		<xsl:template match="xforms:model|xforms:extension" priority="2"/>
+		<xsl:template match="xforms:model" mode="script" priority="1">
+			<xsl:param name="parentworkid"/>
+			<xsl:param name="workid" select="concat(position(),'_',$parentworkid)"/>
+			<xsl:apply-templates select="@*" mode="scriptattr"/>
+			<js>
+				<xsl:text>var </xsl:text>
+				<xsl:value-of select="$vn_pf"/>
+				<xsl:text>model_</xsl:text>
+				<xsl:value-of select="$workid"/>
+				<xsl:text> = XsltForms_model.create(</xsl:text>
+				<xsl:value-of select="$vn_subform"/>
+				<xsl:text>,</xsl:text>
+				<xsl:variable name="rid">
+					<xsl:choose>
+						<xsl:when test="@id">"<xsl:value-of select="@id"/></xsl:when>
+						<xsl:when test="not(preceding-sibling::xforms:model)">"<xsl:value-of select="$id_pf"/>model-default</xsl:when>
+						<xsl:otherwise>
+							<xsl:value-of select="$jsid_pf"/>
+							<xsl:text>model-</xsl:text>
+							<xsl:value-of select="$workid"/>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable>
+				<xsl:value-of select="$rid"/>
+				<xsl:text>",</xsl:text>
+				<xsl:call-template name="toScriptParam"><xsl:with-param name="p" select="@schema"/></xsl:call-template>
+				<xsl:text>,</xsl:text>
+				<xsl:call-template name="toScriptParam"><xsl:with-param name="p" select="@functions"/></xsl:call-template>
+				<xsl:text>,</xsl:text>
+				<xsl:call-template name="toScriptParam"><xsl:with-param name="p" select="@version"/></xsl:call-template>
+				<xsl:text>)</xsl:text>
+				<xsl:apply-templates select="xforms:itext" mode="itext"/>
+				<xsl:text>;</xsl:text>
+				<xsl:if test="not(xforms:instance)">
+					<xsl:text>XsltForms_instance.create(</xsl:text>
+					<xsl:value-of select="$vn_subform"/>
+					<xsl:text>,"</xsl:text>
+					<xsl:value-of select="$id_pf"/>
+					<xsl:text>instance-default",</xsl:text>
+					<xsl:value-of select="$vn_pf"/>
+					<xsl:text>model_</xsl:text>
+					<xsl:value-of select="$workid"/>
+					<xsl:text>,false,"application/xml",null,'&lt;data xmlns=""&gt;</xsl:text>
+					<xsl:for-each select="//@ref[namespace-uri(parent::*) = 'http://www.w3.org/2002/xforms']">
+						<xsl:text>&lt;</xsl:text>
+						<xsl:value-of select="."/>
+						<xsl:text>/&gt;</xsl:text>
+					</xsl:for-each>
+					<xsl:text>&lt;/data&gt;');</xsl:text>
+				</xsl:if>
+			</js>
+			<js>
+				<xsl:apply-templates select="xsd:schema" mode="schema"/>
+			</js>
+			<xsl:apply-templates select="node()" mode="script">
+				<xsl:with-param name="parentworkid" select="$workid"/>
+			</xsl:apply-templates>
+			<xsl:call-template name="listeners">
+				<xsl:with-param name="current" select="."/>
+				<xsl:with-param name="workid" select="$workid"/>
+			</xsl:call-template>
+		</xsl:template>
 	
 		
 		<xsl:template match="xforms:output | xforms:label[(@ref or @bind) and not(parent::xforms:item) and not(parent::xforms:itemset) and not(parent::xforms:choices)]" mode="script" priority="1">
@@ -5053,7 +5114,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 		</xsl:template>
 	
 		
-		<xsl:template match="xforms:model|xforms:extension" priority="2"/>
+		<xsl:template match="xforms:model" mode="island" priority="1">
+			<model id="{concat('xf-model-',count(preceding::xforms:model|ancestor::xforms:model))}">
+				<xsl:apply-templates select="xforms:instance" mode="island"/>
+			</model>
+		</xsl:template>
 	
 		
 		<xsl:template match="text()" mode="island" priority="0">
