@@ -44,10 +44,30 @@
 		<kert:type>unattended</kert:type>
 		<kert:assertion-type>assert-xml</kert:assertion-type>
 	</kert:test>
+	<kert:test id="2">
+		<kert:author>Claudius Teodorescu</kert:author>
+		<kert:title>CKEditor</kert:title>
+		<kert:version>0.1</kert:version>
+		<kert:description>
+			This test is for rendering a CKEditor instance. If the editor is rendered well, the test is passed.
+		</kert:description>
+		<kert:test-url>dojo-rich-text-editor.xml</kert:test-url>
+		<kert:source-url></kert:source-url>
+		<kert:assertion>//result-token</kert:assertion>
+		<kert:timeout />
+		<kert:run-status timestamp="" />
+		<kert:development-status timestamp="" />
+		<kert:log />
+		<kert:loops-number />
+		<kert:total-test-time />
+		<kert:type>unattended</kert:type>
+		<kert:assertion-type>assert-xml</kert:assertion-type>
+	</kert:test>	
 	<kert:traceability-matrix />
 	<kert:test-tree>
 		<ul id="data">
 			<li id="tree-1" title="Test 1">CKEditor</li>
+			<li id="tree-2" title="Test 2">Dojo rich text editor</li>
 		</ul>
 	</kert:test-tree>
 </kert:test-plan>

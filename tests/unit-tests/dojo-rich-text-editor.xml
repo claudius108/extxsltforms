@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../resources/xsltforms/xsltforms.xsl" type="text/xsl"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:exfk="http://kuberam.ro/exsltforms" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+	    <title>Dojo rich text editor</title>
+        <style language="text/css">
+		<![CDATA[
+			@namespace xf url("http://www.w3.org/2002/xforms");
+			#outputSavedContent .xforms-label {margin-bottom:25px;margin-right:490px;font:bold 14px verdana;}
+		]]>
+	</style>
+	<link rel="stylesheet" href="../../../utils/dojo/dijit/themes/tundra/tundra.css"/>
+        <xf:model id="m">
+            <xf:instance id="i0">
+                <v xmlns="">
+                    <description>
+				&lt;p&gt;&lt;strong&gt;&lt;span style="font-size: 16px;"&gt;Instructions for testing the integration of Dojo Editor&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
+				&lt;p&gt;In order to save the editor content to bounded node, please modify this text and leave the editor.&lt;/p&gt;
+			</description>
+                </v>
+            </xf:instance>
+	    <xf:instance id="i1">
+		    <Address xmlns="">
+			    <LocationStreet date="2010-05-01">Street 1 </LocationStreet>
+			    <LocationStreet date="2010-05-02">Street 2 </LocationStreet>
+			    <LocationStreet date="2010-05-03">Street 3 </LocationStreet>
+		    </Address>
+        </xf:instance>
+        </xf:model>
+    </head>
+    <body class="tundra">
+	<p>
+		<xf:output id="outputSavedContent" ref="instance('i0')/description">
+			<xf:label>Saved editor content: </xf:label>
+		</xf:output>
+        </p>
+        <p>
+		<xf:textarea ref="instance('i0')/description" appearance="exfk:DojoEditor" incremental="true">
+                <xf:label>Dojo editor 1 (it has @incremental = "true"):</xf:label>
+                <xf:extension>
+			<exfk:rteOptions>{items: ['bold', 'italic', 'underline', 'strikethrough']}</exfk:rteOptions>
+                </xf:extension>
+            </xf:textarea>
+        </p>
+	<h2>Editors within a xf:repeat</h2>
+<!-- 	<xf:repeat nodeset="instance('i1')/LocationStreet"> -->
+<!-- 		<xf:textarea ref="." appearance="exfk:DojoEditor" incremental="true"> -->
+<!-- 			<xf:label>Dojo editor 1 (it has @incremental = "true"):</xf:label> -->
+<!-- 			<xf:extension> -->
+<!-- 				<exfk:rteOptions>{items: ['bold', 'italic', 'underline', 'strikethrough']}</exfk:rteOptions> -->
+<!-- 			</xf:extension> -->
+<!--             </xf:textarea> -->
+<!--     </xf:repeat> -->
+    </body>
+</html>
