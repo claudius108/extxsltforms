@@ -70,7 +70,7 @@
 		<kert:description>
 			This test is for rendering EditArea. If the editors are rendered well, the test is passed.
 		</kert:description>
-		<kert:test-url>editarea-rich-text-editor.xml</kert:test-url>
+		<kert:test-url>editarea-code-editor.xml</kert:test-url>
 		<kert:source-url></kert:source-url>
 		<kert:assertion>//result-token</kert:assertion>
 		<kert:timeout />
