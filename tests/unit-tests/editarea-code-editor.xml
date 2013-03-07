@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../../../utils/xsltforms/xsltforms.xsl" type="text/xsl"?><!-- <?xsltforms-options debug="yes"?> -->
+<html eXSLTFormsDataInstancesViewer="true" xmlns="http://www.w3.org/1999/xhtml" xmlns:exfk="http://kuberam.ro/exsltforms"
+  xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xf="http://www.w3.org/2002/xforms">
+  <head>
+    <title>EditArea code editor</title>
+    <style language="text/css">
+		<![CDATA[
+			 @namespace xf url("http://www.w3.org/2002/xforms");
+			 xf|trigger {float:left;margin-right:100px;margin-bottom:25px;}
+             .outputSavedContent {background-color: #ece9d8;}
+			 ]]>
+    </style>
+    <xf:model id="m">
+      <xf:instance id="i0">
+        <v xmlns="">
+          <content-1>
+(:
+ Instructions for testing the integration of EditArea:\n
+ Modify the code in any of the editors and press button "Save".\n
+ The content of the bounded node will be updated.
+:)
+let $a := 'string'
+
+return $a
+          </content-1>
+          <content-2>
+&lt;?php	
+	$authors	= array();
+	$news		= array();
+	/* this is a long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long long comment for showing word-wrap feature */
+	$query	= "SELECT author, COUNT(id) as 'nb_news' FROM news_messages GROUP BY author";
+	$result	= mysql_query($query, $DBnews);
+	while( $line = mysql_fetch_assoc($result) ){
+		$authors[$line["author"]]	= $line["author"];
+		$news[$line["author"]]		= $line['nb_news'];
+	}
+	
+	$list= sprintf("('%s')", implode("', '", $authors));
+	
+	
+	$query="SELECT p.people_id, p.name, p.fname, p.status, team_name, t.leader_id=p.people_id as 'team_leader', w.name as 'wp_name', w.type
+			FROM people p, teams t, wppartis wp, wps w
+			WHERE p.people_id IN $list AND p.org_id=t.team_id AND wp.team_id=t.team_id AND wp.wp_id=w.wp_id 
+			GROUP BY p.people_id";
+	if(isset($_GET["order"]) &amp;&amp; $_GET["order"]!="nb_news")
+		$query.=" ORDER BY ".$_GET["order"];
+		
+	$result=mysql_query($query, $DBkal);
+	while($line = mysql_fetch_assoc($result)){
+		printf("&lt;tr&gt;&lt;td&gt;%s&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;/tr&gt;", $line["name"], $line["fname"],
+			$news[$line["people_id"]], $line["status"], $line["team_name"], ($line["team_leader"]=="1")?"yes":"no", $line["type"], $line["wp_name"]);
+	
+	}
+	printf("&lt;/table&gt;");
+?&gt;
+          </content-2>
+        </v>
+      </xf:instance>
+      <xf:instance id="i1">
+        <Address xmlns="">
+          <LocationStreet date="2010-05-01">Street 1 </LocationStreet>
+          <LocationStreet date="2010-05-02">Street 2 </LocationStreet>
+          <LocationStreet date="2010-05-03">Street 3 </LocationStreet>
+        </Address>
+      </xf:instance>
+    </xf:model>
+  </head>
+  <body>
+    <xf:trigger id="triggerHome">
+      <xf:label>Home</xf:label>
+      <xf:action ev:event="DOMActivate">
+        <xf:load resource="../../index/index.xml" />
+      </xf:action>
+    </xf:trigger>
+    <xf:trigger>
+      <xf:label>Download extension</xf:label>
+      <xf:action ev:event="DOMActivate">
+        <xf:load resource="http://sourceforge.net/projects/extxsltforms/files/" />
+      </xf:action>
+    </xf:trigger>
+
+    <p>
+      <xf:textarea ref="instance('i0')/content-1" appearance="exfk:EditArea">
+        <xf:label>EditArea 1 (XQuery content):</xf:label>
+        <xf:extension>
+          <exfk:rteOptions>
+            {
+            start_highlight: true,
+            allow_toggle: false,
+            toolbar: 'new_document, save, load, search, go_to_line, |, undo, redo, |, select_font, |, syntax_selection, |, change_smooth_selection, highlight, reset_highlight, |, help',
+            word_wrap: true,
+            language: 'en',
+            syntax: 'xquery',
+            min_height: 350,
+            min_width: 1200,
+            syntax_selection_allow: 'xquery,css,html,js,xml',
+            autocompletion: true
+            }
+          </exfk:rteOptions>
+        </xf:extension>
+      </xf:textarea>
+    </p>
+    <p>
+      <xf:label>'EditArea 1' saved content: </xf:label>
+    </p>
+    <p>
+      <xf:output class="outputSavedContent" ref="instance('i0')/content-1" />
+    </p>
+
+<!--     <p> -->
+<!--       <xf:textarea ref="instance('i0')/content-2" appearance="exfk:EditArea"> -->
+<!--         <xf:label>EditArea 2 (PHP content):</xf:label> -->
+<!--         <xf:extension> -->
+<!--           <exfk:rteOptions> -->
+<!--             { -->
+<!--             start_highlight: true, -->
+<!--             allow_toggle: false, -->
+<!--             toolbar: 'new_document, save, load, search, go_to_line, |, undo, redo, |, select_font, |, syntax_selection, |, change_smooth_selection, highlight, reset_highlight, |, help', -->
+<!--             word_wrap: true, -->
+<!--             language: 'en', -->
+<!--             syntax: 'php', -->
+<!--             min_height: 350, -->
+<!--             min_width: 1200, -->
+<!--             syntax_selection_allow: 'php,css,html', -->
+<!--             autocompletion: true -->
+<!--             } -->
+<!--           </exfk:rteOptions> -->
+<!--         </xf:extension> -->
+<!--       </xf:textarea> -->
+<!--     </p> -->
+<!--     <p> -->
+<!--       <xf:label>'EditArea 2' saved content: </xf:label> -->
+<!--     </p> -->
+<!--     <p> -->
+<!--       <xf:output class="outputSavedContent" ref="instance('i0')/content-2" /> -->
+<!--     </p> -->
+
+
+<!--     <h2>Editors within a xf:repeat</h2> -->
+<!--     <xf:repeat nodeset="instance('i1')/LocationStreet"> -->
+<!--       <xf:textarea ref="." appearance="exfk:EditArea"> -->
+<!--         <xf:label>EditArea:</xf:label> -->
+<!--         <xf:extension> -->
+<!--           <exfk:rteOptions> -->
+<!--             { -->
+<!--             start_highlight: true, -->
+<!--             allow_toggle: false, -->
+<!--             toolbar: 'new_document, save, load, search, go_to_line, |, undo, redo, |, select_font, |, syntax_selection, |, change_smooth_selection, highlight, reset_highlight, |, help', -->
+<!--             word_wrap: true, -->
+<!--             language: 'en', -->
+<!--             syntax: 'xquery', -->
+<!--             min_height: 350, -->
+<!--             min_width: 500, -->
+<!--             syntax_selection_allow: 'xquery,css,html,js,xml', -->
+<!--             autocompletion: true -->
+<!--             } -->
+<!--           </exfk:rteOptions> -->
+<!--         </xf:extension> -->
+<!--       </xf:textarea> -->
+<!--     </xf:repeat> -->
+  </body>
+</html>
