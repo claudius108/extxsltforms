@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="../../../utils/xsltforms/xsltforms.xsl" type="text/xsl"?><!-- <?xsltforms-options debug="yes"?> -->
-<html eXSLTFormsDataInstancesViewer="true" xmlns="http://www.w3.org/1999/xhtml" xmlns:exfk="http://kuberam.ro/exsltforms"
+<?xml-stylesheet href="../resources/xsltforms/xsltforms.xsl" type="text/xsl"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:exfk="http://kuberam.ro/exsltforms"
   xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xf="http://www.w3.org/2002/xforms">
   <head>
     <title>EditArea code editor</title>
     <style language="text/css">
 		<![CDATA[
 			 @namespace xf url("http://www.w3.org/2002/xforms");
-			 xf|trigger {float:left;margin-right:100px;margin-bottom:25px;}
              .outputSavedContent {background-color: #ece9d8;}
 			 ]]>
     </style>
@@ -67,50 +66,9 @@ return $a
     </xf:model>
   </head>
   <body>
-    <xf:trigger id="triggerHome">
-      <xf:label>Home</xf:label>
-      <xf:action ev:event="DOMActivate">
-        <xf:load resource="../../index/index.xml" />
-      </xf:action>
-    </xf:trigger>
-    <xf:trigger>
-      <xf:label>Download extension</xf:label>
-      <xf:action ev:event="DOMActivate">
-        <xf:load resource="http://sourceforge.net/projects/extxsltforms/files/" />
-      </xf:action>
-    </xf:trigger>
-
-    <p>
-      <xf:textarea ref="instance('i0')/content-1" appearance="exfk:EditArea">
-        <xf:label>EditArea 1 (XQuery content):</xf:label>
-        <xf:extension>
-          <exfk:rteOptions>
-            {
-            start_highlight: true,
-            allow_toggle: false,
-            toolbar: 'new_document, save, load, search, go_to_line, |, undo, redo, |, select_font, |, syntax_selection, |, change_smooth_selection, highlight, reset_highlight, |, help',
-            word_wrap: true,
-            language: 'en',
-            syntax: 'xquery',
-            min_height: 350,
-            min_width: 1200,
-            syntax_selection_allow: 'xquery,css,html,js,xml',
-            autocompletion: true
-            }
-          </exfk:rteOptions>
-        </xf:extension>
-      </xf:textarea>
-    </p>
-    <p>
-      <xf:label>'EditArea 1' saved content: </xf:label>
-    </p>
-    <p>
-      <xf:output class="outputSavedContent" ref="instance('i0')/content-1" />
-    </p>
-
 <!--     <p> -->
-<!--       <xf:textarea ref="instance('i0')/content-2" appearance="exfk:EditArea"> -->
-<!--         <xf:label>EditArea 2 (PHP content):</xf:label> -->
+<!--       <xf:textarea ref="instance('i0')/content-1" appearance="exfk:EditArea"> -->
+<!--         <xf:label>EditArea 1 (XQuery content):</xf:label> -->
 <!--         <xf:extension> -->
 <!--           <exfk:rteOptions> -->
 <!--             { -->
@@ -119,16 +77,43 @@ return $a
 <!--             toolbar: 'new_document, save, load, search, go_to_line, |, undo, redo, |, select_font, |, syntax_selection, |, change_smooth_selection, highlight, reset_highlight, |, help', -->
 <!--             word_wrap: true, -->
 <!--             language: 'en', -->
-<!--             syntax: 'php', -->
+<!--             syntax: 'xquery', -->
 <!--             min_height: 350, -->
 <!--             min_width: 1200, -->
-<!--             syntax_selection_allow: 'php,css,html', -->
+<!--             syntax_selection_allow: 'xquery,css,html,js,xml', -->
 <!--             autocompletion: true -->
 <!--             } -->
 <!--           </exfk:rteOptions> -->
 <!--         </xf:extension> -->
 <!--       </xf:textarea> -->
 <!--     </p> -->
+    <p>
+      <xf:label>'EditArea 1' saved content: </xf:label>
+    </p>
+    <p>
+      <xf:output class="outputSavedContent" ref="instance('i0')/content-2" />
+    </p>
+    <p>
+      <xf:textarea ref="instance('i0')/content-2" appearance="exfk:EditArea">
+        <xf:label>EditArea 2 (PHP content):</xf:label>
+        <xf:extension>
+          <exfk:rteOptions>
+            {
+            start_highlight: true,
+            allow_toggle: false,
+            toolbar: 'new_document, save, load, search, go_to_line, |, undo, redo, |, select_font, |, syntax_selection, |, change_smooth_selection, highlight, reset_highlight, |, help',
+            word_wrap: true,
+            language: 'en',
+            syntax: 'php',
+            min_height: 350,
+            min_width: 1200,
+            syntax_selection_allow: 'php,css,html',
+            autocompletion: true
+            }
+          </exfk:rteOptions>
+        </xf:extension>
+      </xf:textarea>
+    </p>
 <!--     <p> -->
 <!--       <xf:label>'EditArea 2' saved content: </xf:label> -->
 <!--     </p> -->
