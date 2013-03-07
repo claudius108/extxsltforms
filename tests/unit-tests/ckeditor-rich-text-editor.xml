@@ -5,8 +5,7 @@
         <title>CKEditor</title>
         <style language="text/css">
 		@namespace xf url("http://www.w3.org/2002/xforms");
-		#triggerHome {float:left; margin-bottom:25px;}
-		#outputSavedContent .xforms-label {margin-bottom:25px;margin-right:490px;font:bold 14px verdana;}
+		#outputSavedContent .xforms-label {margin-bottom:25px;font: bold 14px verdana;}
 </style>
         <xf:model id="m">
             <xf:instance id="i0">
@@ -20,12 +19,6 @@
         </xf:model>
     </head>
     <body>
-        <xf:trigger id="triggerHome">
-            <xf:label>Home</xf:label>
-            <xf:action ev:event="DOMActivate">
-                <xf:load resource="../../index/index.xml"/>
-            </xf:action>
-        </xf:trigger>
         <p>
             <xf:output id="outputSavedContent" ref="instance('i0')/description">
                 <xf:label>Saved editor content: </xf:label>
@@ -34,36 +27,16 @@
         <p>
             <xf:textarea ref="instance('i0')/description" appearance="exfk:CKEditor" incremental="true">
                 <xf:label>CKEditor editor 1 (it has @incremental = "true"):</xf:label>
-                <xf:extension><!--, entities_additional: '#160'-->
-                    <exfk:rteOptions>{skin:'office2003'}</exfk:rteOptions>
+                <xf:extension>
+                    <exfk:rteOptions>{}</exfk:rteOptions>
                 </xf:extension>
             </xf:textarea>
         </p>
         <xf:textarea ref="instance('i0')/description" appearance="exfk:CKEditor">
             <xf:label>CKEditor editor 2:</xf:label>
             <xf:extension>
-                <exfk:rteOptions>
-				{
-				skin:'v2'
-				}
-			</exfk:rteOptions>
+                <exfk:rteOptions>{}</exfk:rteOptions>
             </xf:extension>
         </xf:textarea>
-<!--        <p>
-            <xf:textarea ref="instance('i0')/description" appearance="exfk:CKEditor">
-                <xf:label>CKEditor editor 3:</xf:label>
-                <xf:extension>
-                    <exfk:rteOptions>skin:'office2003'</exfk:rteOptions>
-                </xf:extension>
-            </xf:textarea>
-        </p>
-        <p>
-            <xf:textarea ref="instance('i0')/description" appearance="exfk:CKEditor">
-                <xf:label>CKEditor editor 4:</xf:label>
-                <xf:extension>
-                    <exfk:rteOptions>skin:'office2003'</exfk:rteOptions>
-                </xf:extension>
-            </xf:textarea>
-        </p>-->
     </body>
 </html>
