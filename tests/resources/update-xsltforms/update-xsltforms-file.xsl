@@ -13,7 +13,13 @@
 			<xsl:attribute name="name">exsltforms</xsl:attribute>
 		</xsl:element>
 		<xsl:copy-of select="." />		
-	</xsl:template>	
+	</xsl:template>
+	<xsl:template match="xsl:template[starts-with(@match, 'xforms:model')]">
+		<xsl:element name="xsl:template" namespace="http://www.w3.org/1999/XSL/Transform">
+			<xsl:attribute name="match"><xsl:value-of select="concat(@match, '|xforms:extension')" /></xsl:attribute>
+			<xsl:attribute name="priority">2</xsl:attribute>
+		</xsl:element>	
+	</xsl:template>		
 	<xsl:template match="@*|node()">
 		<xsl:copy>
 			<xsl:apply-templates select="@*|node()" />
