@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../resources/xsltforms/xsltforms.xsl" type="text/xsl"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:exfk="http://kuberam.ro/exsltforms" xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<title>Xinha rich text editor</title>
+		<style language="text/css">
+		    <![CDATA[
+			     @namespace xf url("http://www.w3.org/2002/xforms");
+			     #outputSavedContent .xforms-label {margin-bottom:25px;margin-right:490px;font:bold 14px verdana;}
+			     ]]>
+		</style>
+		<xf:model id="m">
+			<xf:instance id="i0">
+				<v xmlns="">
+					<description>&lt;p&gt;&lt;strong&gt;&lt;span style="font-size: 16px;"&gt;Instructions for testing the integration
+						of Xinha&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
+						&lt;p&gt;In order to save the editor content to bounded node, please
+						modify this text and leave the editor.&lt;/p&gt; </description>
+				</v>
+			</xf:instance>
+		</xf:model>
+	</head>
+	<body>
+		<p>
+			<xf:output id="outputSavedContent" ref="instance('i0')/description">
+				<xf:label>Saved editor content: </xf:label>
+			</xf:output>
+		</p>
+		<p>
+			<xf:textarea ref="instance('i0')/description" appearance="exfk:Xinha" incremental="true">
+				<xf:label>Xinha editor 1 (it has @incremental = "true"):</xf:label>
+				<xf:extension>
+					<exfk:rteOptions>
+						{
+						plugins: [],
+						configOptions:
+						{
+						width: 'auto', height: 'auto'
+						}
+						}
+					</exfk:rteOptions>
+				</xf:extension>
+			</xf:textarea>
+		</p>
+		<p>
+			<xf:textarea ref="instance('i0')/description" appearance="exfk:Xinha">
+				<xf:label>Xinha editor:</xf:label>
+				<xf:extension>
+					<exfk:rteOptions>
+						{
+						plugins: ['CharacterMap', 'ContextMenu', 'ListType', 'Stylist', 'SuperClean', 'TableOperations'],
+						configOptions:
+						{
+						toolbar: [
+						['popupeditor'],
+						['separator','formatblock','fontname','fontsize','bold','italic','underline','strikethrough'],
+						['separator','forecolor','hilitecolor','textindicator'],
+						['separator','subscript','superscript'],
+						['linebreak','separator','justifyleft','justifycenter','justifyright','justifyfull'],
+						['separator','insertorderedlist','insertunorderedlist','outdent','indent'],
+						['separator','inserthorizontalrule','createlink','insertimage','inserttable'],
+						['linebreak','separator','undo','redo','selectall','print'], (Xinha.is_gecko ? [] :
+						['cut','copy','paste','overwrite','saveas']),
+						['separator','killword','clearfonts','removeformat','toggleborders','splitblock','lefttoright', 'righttoleft'],
+						['separator','htmlmode','showhelp','about']
+						],
+						width: '840px', height: '280px'
+						}
+						}
+					</exfk:rteOptions>
+				</xf:extension>
+			</xf:textarea>
+		</p>
+	</body>
+</html>
