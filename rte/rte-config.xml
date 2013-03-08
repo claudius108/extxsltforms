@@ -4,22 +4,20 @@
 	<editor type="YUIEditor">
 		<!--set the URI to the YUI folder -->
 		<initialize>
-			<!-- <script src="http://yui.yahooapis.com/2.8.1/build/yuiloader/yuiloader-min.js">/* */</script> -->
-			<script type="text/javascript" src="../../../utils/yui/build/yuiloader/yuiloader.js">/* */</script>
+			<script type="text/javascript" src="http://yui.yahooapis.com/2.8.1/build/yuiloader/yuiloader-min.js">/* */</script>
 			<script type="text/javascript">
 				<![CDATA[
 					function generateYUIeditors() {
-						exsltforms.utils.pollingConditions[ 'generateYUIEditors' ] = {
-							testedValue: function() { return (typeof YAHOO.widget.EditorInfo != 'undefined') },
+						exsltforms.utils.pollingConditions['generateYUIEditors'] = {
+							testedValue: function() {return (typeof YAHOO.widget.EditorInfo != 'undefined')},
 							executedFunction: function() {
-								exsltforms.rte.generateEditors( 'YUIEditor' );
+								exsltforms.rte.generateEditors('YUIEditor');
 							}
 						}
-						exsltforms.utils.poll( 'generateYUIEditors' );
+						exsltforms.utils.poll('generateYUIEditors');
 					}
 					//set the base value = URI to the 'build' folder within YUI folder
-					var YUIloader = new YAHOO.util.YUILoader( { require: [ 'editor' ], base: '../../../utils/yui/build/' } );
-					//var YUIloader = new YAHOO.util.YUILoader( { require: [ 'editor' ], base: 'http://yui.yahooapis.com/2.8.1/build/' } );
+					var YUIloader = new YAHOO.util.YUILoader({require: ['editor'], base: 'http://yui.yahooapis.com/2.8.1/build/'});
 					YUIloader.onSuccess = generateYUIeditors;
 					YUIloader.insert();
 				]]>
@@ -74,10 +72,10 @@
 	<editor type="Xinha">
 		<initialize>
 			<script type="text/javascript">
-				_editor_url = "http://127.0.0.1/web-sites/xinha/" //(preferably absolute) URL (including trailing slash) where Xinha is installed
+				_editor_url = "../resources/xinha/" //(preferably absolute) URL (including trailing slash) where Xinha is installed
 				_editor_lang = "en"; //And the language we need to use in the editor.
 			</script>
-			<script type="text/javascript" src="http://127.0.0.1/web-sites/xinha/XinhaLoader.js">/* */</script>
+			<script type="text/javascript" src="../resources/xinha/XinhaLoader.js">/* */</script>
 			<script type="text/javascript">
 				<![CDATA[
 					xinha_editorIds = [];
