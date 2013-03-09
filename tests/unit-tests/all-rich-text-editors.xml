@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../resources/xsltforms/xsltforms.xsl" type="text/xsl"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:exfk="http://kuberam.ro/exsltforms" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+	    <title>Rich text editors</title>
+	    <style language="text/css">
+		    <![CDATA[
+			     @namespace xf url("http://www.w3.org/2002/xforms");
+			     #outputSavedContent .xforms-label {margin-bottom:25px;margin-right:490px;font:bold 14px verdana;}
+			     ]]>
+	</style>
+        <xf:model id="m">
+		            <xf:instance id="i0">
+			<v xmlns="">
+				<description>
+					&lt;p&gt;&lt;strong&gt;&lt;span style="font-size: 16px;"&gt;Instructions for testing the integration of RTEs in XSLTForms&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
+					&lt;p&gt;In order to save the editor content to bounded node, please modify this text and leave the editor.&lt;/p&gt;
+				</description>
+				<description>
+				</description>
+			</v>
+            </xf:instance>
+        </xf:model>
+    </head>
+    <body class="tundra yui-skin-sam">
+		<p>
+			<xf:textarea ref="instance('i0')/description" appearance="exfk:DojoEditor" incremental="true">
+				<xf:label>Dojo editor 1 (it has @incremental = "true"):</xf:label>
+				<xf:extension>
+					<exfk:rteOptions>{items: ['bold', 'italic', 'underline', 'strikethrough']}</exfk:rteOptions>
+				</xf:extension>
+			</xf:textarea>
+		</p>
+		<p>
+			<xf:textarea ref="instance('i0')/description" appearance="exfk:CKEditor" incremental="true">
+				<xf:label>CKEditor editor 1 (it has @incremental = "true"):</xf:label>
+				<xf:extension>
+					<exfk:rteOptions>{}</exfk:rteOptions>
+				</xf:extension>
+			</xf:textarea>
+		</p>
+		<p class="yui-skin-sam">
+		<xf:textarea ref="instance('i0')/description" appearance="exfk:YUIEditor" incremental="true">
+			<xf:label>YUI editor 1 (it has @incremental = "true"):</xf:label>
+			<xf:extension>
+				<exfk:rteOptions>{YUIeditorType: 'Editor', height: '300px', width: '600px', animate: true, dompath: true, autoHeight: true}</exfk:rteOptions>
+			</xf:extension>
+		</xf:textarea>
+	</p>
+	    <p class="yui-skin-sam">
+		<xf:textarea ref="instance('i0')/description" appearance="exfk:YUIEditor" incremental="true">
+			<xf:label>YUI simple editor (it has @incremental = "true"):</xf:label>
+			<xf:extension>
+				<exfk:rteOptions>{YUIeditorType: 'SimpleEditor', height: '300px',width: '500px',dompath: true}</exfk:rteOptions>
+			</xf:extension>
+		</xf:textarea>
+	</p>
+	    <p>
+		<xf:textarea ref="instance('i0')/description" appearance="exfk:EditArea">
+			<xf:label>EditArea textarea:</xf:label>
+			<xf:extension>
+				<exfk:rteOptions>
+					{
+					start_highlight: true,
+					allow_toggle: false,
+					toolbar: 'new_document, save, load, search, go_to_line, |, undo, redo, |, select_font, |, syntax_selection, |, change_smooth_selection, highlight, reset_highlight, |, help',
+					word_wrap: true,
+					language: 'en',
+					syntax: 'html',
+					min_height: 350,
+					min_width: 1200,
+					syntax_selection_allow: 'css,html,js,xml',
+					autocompletion: true
+					}
+				</exfk:rteOptions>
+			</xf:extension>
+		</xf:textarea>
+        </p>
+    </body>
+</html>

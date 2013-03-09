@@ -142,6 +142,25 @@
 		<kert:type>unattended</kert:type>
 		<kert:assertion-type>assert-xml</kert:assertion-type>
 	</kert:test>
+	<kert:test id="7">
+		<kert:author>Claudius Teodorescu</kert:author>
+		<kert:title>All rich text editors</kert:title>
+		<kert:version>0.1</kert:version>
+		<kert:description>
+			This test is for rendering all rich text editors that are are supported. If the editors are rendered well, the test is passed.
+		</kert:description>
+		<kert:test-url>all-rich-text-editors.xml</kert:test-url>
+		<kert:source-url></kert:source-url>
+		<kert:assertion>//result-token</kert:assertion>
+		<kert:timeout />
+		<kert:run-status timestamp="" />
+		<kert:development-status timestamp="" />
+		<kert:log />
+		<kert:loops-number />
+		<kert:total-test-time />
+		<kert:type>unattended</kert:type>
+		<kert:assertion-type>assert-xml</kert:assertion-type>
+	</kert:test>
 	<kert:traceability-matrix />
 	<kert:test-tree>
 		<ul id="data">
@@ -150,7 +169,8 @@
 			<li id="tree-3" title="Test 3">EditArea</li>
 			<li id="tree-4" title="Test 4">Xinha rich text editor</li>
 			<li id="tree-5" title="Test 5">YUI rich text editors</li>
-			<li id="tree-5" title="Test 5">Transform action</li>
+			<li id="tree-6" title="Test 6">Transform action</li>
+			<li id="tree-7" title="Test 7">All rich text editors</li>
 		</ul>
 	</kert:test-tree>
 </kert:test-plan>

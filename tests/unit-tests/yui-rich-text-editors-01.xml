@@ -50,7 +50,7 @@
             <xf:textarea ref="instance('i0')/description" appearance="exfk:YUIEditor" incremental="true">
                 <xf:label>YUI editor 1 (it has @incremental = "true"):</xf:label>
                 <xf:extension>
-			<exfk:rteOptions>{YUIeditorType: 'Editor', height: '300px', width: '600px', animate: true, dompath: true, focusAtStart: true, autoHeight: true}</exfk:rteOptions>
+					<exfk:rteOptions>{YUIeditorType: 'Editor', height: '300px', width: '600px', animate: true, dompath: true, focusAtStart: true, autoHeight: true}</exfk:rteOptions>
                 </xf:extension>
             </xf:textarea>
 	    <xf:textarea ref="instance('i0')/description" appearance="exfk:YUIEditor">
