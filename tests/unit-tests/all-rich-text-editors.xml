@@ -22,7 +22,7 @@
             </xf:instance>
         </xf:model>
     </head>
-    <body class="yui-skin-sam">
+    <body>
 		<p>
 			<xf:textarea ref="instance('i0')/description" appearance="exfk:DojoEditor" incremental="true">
 				<xf:label>Dojo editor 1 (it has @incremental = "true"):</xf:label>

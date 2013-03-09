@@ -7,6 +7,7 @@
 			<script type="text/javascript" src="http://yui.yahooapis.com/2.8.1/build/yuiloader/yuiloader-min.js">/* */</script>
 			<script type="text/javascript">
 				<![CDATA[
+					document.body.className += ' yui-skin-sam';
 					function generateYUIeditors() {
 						exsltforms.utils.pollingConditions['generateYUIEditors'] = {
 							testedValue: function() {return (typeof YAHOO.widget.EditorInfo != 'undefined')},

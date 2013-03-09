@@ -29,7 +29,7 @@
         </xf:instance>
         </xf:model>
     </head>
-    <body class="yui-skin-sam">
+    <body>
         <xf:trigger id="triggerHome">
             <xf:label>Home</xf:label>
             <xf:action ev:event="DOMActivate">
