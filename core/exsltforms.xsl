@@ -196,8 +196,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
         <xsl:param name="appearance" select="false()"/>
         <xsl:param name="parentworkid"/>
         <xsl:param name="workid" select="concat(position(),'_',$parentworkid)"/>
-                
-        <xsl:variable name="idinput" select="count(preceding::xforms:textarea|ancestor::xforms:textarea)"/>
         <xsl:variable name="editorType" select="substring-after(@appearance, ':')"/>
         <xsl:variable name="idExtElem" select="concat($editorType, '_', $workid)"/>
         <xsl:variable name="XFtextareaID">
@@ -215,23 +213,24 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
         	<xsl:with-param name="workid" select="$workid"/>
             <xsl:with-param name="appearance" select="$appearance"/>
             <xsl:with-param name="body">
-                <textarea><xsl:copy-of select="@*[local-name() != 'ref']"/><xsl:call-template name="comun"/><xsl:text/> </textarea>
+                <textarea id="{$idExtElem}"><xsl:copy-of select="@*[local-name() != 'ref']"/><xsl:call-template name="comun"/><xsl:text/> </textarea>
             </xsl:with-param>
         </xsl:call-template>
         <script type="text/javascript">
 			exsltforms.registry.textarea2rte['<xsl:value-of select="$idExtElem"/>'] = {
-				editorType			:	'<xsl:value-of select="$editorType"/>',
-				id 				:	'<xsl:value-of select="$idExtElem"/>',
-				XFtextareaID			:	'<xsl:value-of select="$XFtextareaID"/>',
-				incremental			:	'<xsl:value-of select="@incremental"/>',
-				editorContentModified		:	'no',
-				processContentOnSave		:	exsltforms.rte.generalFunctions.processContentOnSave,
-				processContentOnUpdate		:	exsltforms.rte.generalFunctions.processContentOnUpdate,
-				nativeConfigOptionsObject	:	<xsl:value-of select="xforms:extension/exfk:rteOptions"/>,
-				nativeConfigOptionsString	:	"<xsl:value-of select="normalize-space(xforms:extension/exfk:rteOptions)"/>"
+				editorType : '<xsl:value-of select="$editorType"/>',
+				id : '<xsl:value-of select="$idExtElem"/>',
+				XFtextareaID : '<xsl:value-of select="$XFtextareaID"/>',
+				incremental : '<xsl:value-of select="@incremental"/>',
+				editorContentModified : 'no',
+				processContentOnSave : exsltforms.rte.generalFunctions.processContentOnSave,
+				processContentOnUpdate : exsltforms.rte.generalFunctions.processContentOnUpdate,
+				nativeConfigOptionsObject : <xsl:value-of select="xforms:extension/exfk:rteOptions"/>,
+				nativeConfigOptionsString : "<xsl:value-of select="normalize-space(xforms:extension/exfk:rteOptions)"/>"
 			};
 	</script>
     </xsl:template>
+    
     <xsl:template match="xhtml:table[starts-with(@appearance, 'exfk:')]" mode="script">
         <xsl:variable name="kxexprs">
             <xexprs>
