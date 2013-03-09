@@ -225,8 +225,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 				editorContentModified : 'no',
 				processContentOnSave : exsltforms.rte.generalFunctions.processContentOnSave,
 				processContentOnUpdate : exsltforms.rte.generalFunctions.processContentOnUpdate,
-				nativeConfigOptionsObject : <xsl:value-of select="xforms:extension/exfk:rteOptions"/>,
-				nativeConfigOptionsString : "<xsl:value-of select="normalize-space(xforms:extension/exfk:rteOptions)"/>"
+				nativeConfigOptionsObject : <xsl:value-of select="xforms:extension/exfk:rteOptions"/>
 			};
 	</script>
     </xsl:template>
