@@ -28,12 +28,11 @@ exsltforms.rte = {
 						registry.textarea2rte[ editorId ].processContentOnSave = exsltforms.rte.generalFunctions.processContentOnSave;
 						registry.textarea2rte[ editorId ].processContentOnUpdate = exsltforms.rte.generalFunctions.processContentOnUpdate;
 						registry.textarea2rte[ editorId ].nativeConfigOptionsObject = exsltforms.registry.textarea2rte[ clonededitorId ].nativeConfigOptionsObject;
-						registry.textarea2rte[ editorId ].nativeConfigOptionsString = exsltforms.registry.textarea2rte[ clonededitorId ].nativeConfigOptionsString;
 					}
 					if (editorType in {Xinha: 1, DojoEditor: 1, YUIEditor: 1}) {
 					} else {
 						exsltforms.rte.specificFunctions[editorType].beforeRendering(registry.textarea2rte[editorId].nativeConfigOptionsObject);
-						exsltforms.rte.generateEditor(editorType, editorId, registry.textarea2rte[ editorId ].nativeConfigOptionsObject, registry.textarea2rte[editorId].nativeConfigOptionsString);
+						exsltforms.rte.generateEditor(editorType, editorId, registry.textarea2rte[ editorId ].nativeConfigOptionsObject);
 					}
 				}
 
@@ -60,7 +59,7 @@ exsltforms.rte = {
 			}
 	}, 
 	//function to generate and render editors one by one
-	generateEditor : function(editorType, editorId, nativeConfigOptionsObject, nativeConfigOptionsString) {
+	generateEditor : function(editorType, editorId, nativeConfigOptionsObject) {
 			var generalFunctions = exsltforms.rte.generalFunctions;
 			var specificFunctions = exsltforms.rte.specificFunctions;
 				switch ( editorType ) {
@@ -78,9 +77,9 @@ exsltforms.rte = {
 //						});						
 					break;
 					case "EditArea":
-						var nativeConfigOptionsStringProcessed = nativeConfigOptionsString.substring(nativeConfigOptionsString.indexOf('{') + 1, nativeConfigOptionsString.lastIndexOf('}'));
-						specificFunctions[ exsltforms.registry.textarea2rte[ editorId ].editorType ].beforeRendering( exsltforms.registry.textarea2rte[ editorId ].nativeConfigOptionsObject );
-						editAreaLoader.init(eval('(' + '{ id:\"' + editorId + '\", ' + nativeConfigOptionsStringProcessed + ', save_callback: "exsltforms.rte.specificFunctions.saveEditAreaContent"}' + ')'));
+						nativeConfigOptionsObject.id = editorId;
+						nativeConfigOptionsObject['save_callback'] = 'exsltforms.rte.specificFunctions.saveEditAreaContent';
+						editAreaLoader.init(nativeConfigOptionsObject);
 					break;
 					case "YUIEditor":
 // 					exsltforms.utils.pollingConditions[ 'generateYUIEditors' ] = {

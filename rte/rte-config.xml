@@ -46,6 +46,7 @@
 			</script>
 			<script type="text/javascript">
 				<![CDATA[
+					document.body.className += ' tundra';
 					dojo.addOnLoad(function() {
 						exsltforms.utils.pollingConditions[ 'generateDojoEditors' ] = {
 							testedValue: function() { return exsltforms.utils.pollTestedValues['textarea2rte_registered'] },

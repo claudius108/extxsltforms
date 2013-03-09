@@ -28,7 +28,7 @@
 			</xf:instance>
 		</xf:model>
 	</head>
-	<body class="tundra">
+	<body>
 		<p>
 			<xf:output id="outputSavedContent" ref="instance('i0')/description">
 				<xf:label>Saved editor content: </xf:label>

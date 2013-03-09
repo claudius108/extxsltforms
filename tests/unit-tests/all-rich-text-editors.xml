@@ -22,7 +22,7 @@
             </xf:instance>
         </xf:model>
     </head>
-    <body class="tundra yui-skin-sam">
+    <body class="yui-skin-sam">
 		<p>
 			<xf:textarea ref="instance('i0')/description" appearance="exfk:DojoEditor" incremental="true">
 				<xf:label>Dojo editor 1 (it has @incremental = "true"):</xf:label>
@@ -76,5 +76,34 @@
 			</xf:extension>
 		</xf:textarea>
         </p>
+		<p>
+			<xf:textarea ref="instance('i0')/description" appearance="exfk:Xinha" incremental="true">
+				<xf:label>Xinha editor 1 (it has @incremental = "true"):</xf:label>
+				<xf:extension>
+					<exfk:rteOptions>
+						{
+						plugins: [],
+						configOptions:
+						{
+						toolbar: [
+						['popupeditor'],
+						['separator','formatblock','fontname','fontsize','bold','italic','underline','strikethrough'],
+						['separator','forecolor','hilitecolor','textindicator'],
+						['separator','subscript','superscript'],
+						['linebreak','separator','justifyleft','justifycenter','justifyright','justifyfull'],
+						['separator','insertorderedlist','insertunorderedlist','outdent','indent'],
+						['separator','inserthorizontalrule','createlink','insertimage','inserttable'],
+						['linebreak','separator','undo','redo','selectall','print'], (Xinha.is_gecko ? [] :
+						['cut','copy','paste','overwrite','saveas']),
+						['separator','killword','clearfonts','removeformat','toggleborders','splitblock'],
+						['separator','htmlmode','showhelp']
+						],						
+						width: 'auto', height: 'auto'
+						}
+						}
+					</exfk:rteOptions>
+				</xf:extension>
+			</xf:textarea>
+		</p>        
     </body>
 </html>
