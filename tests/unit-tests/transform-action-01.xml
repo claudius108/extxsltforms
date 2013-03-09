@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../resources/xsltforms/xsltforms.xsl" type="text/xsl"?>
+<?xsltforms-options debug="yes"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <title>Test cases for eXSLTForms extension actions for XForms</title>
+        <style type="text/css">
+		<![CDATA[
+			.testTrigger {float:left;margin:auto;}
+			#triggerHome {float:left;margin-right:1300px;margin-bottom:25px;}
+			.testExplanation {float:left;width:100%;margin-top:20px;margin-bottom:5px;font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;font-size:14px;font-weight:bold;}
+			h2 {margin-top:70px;}
+		]]>
+	</style>
+        <xf:model id="model1">
+            <xf:instance id="instance1">
+                <v xmlns="">
+                    <pam date="2009-12-12" year="2009" workingPeriod="12">-100</pam>
+                    <v1 date="2009-12-12"> v1 text
+                        		<p>initial value</p>
+                    </v1>
+                    <bindings date="2009-12-12">bindings text
+                        		<binding>binding value</binding>
+                    </bindings>
+                </v>
+            </xf:instance>
+            <xf:instance id="instance2">
+                <pa xmlns="">
+                    <pam date="2009-12-12" year="2009" workingPeriod="12">-100</pam>
+                    <pac id="pac">text al pac
+				    <p validate="false">finala</p>
+                    </pac>
+                    <parameters>
+                        <param name="param1" value="value17"/>
+                        <param name="param2" value="value22"/>
+                    </parameters>
+                    <parameters22>
+                        <param name="param1" value="value17">
+                            <p validate="false">finala</p>
+                        </param>
+                        <param name="param2" value="value22">param2 text
+					<pac id="pac">text al pac
+						<p validate="false">finala
+							<pam date="2009-12-12" year="2009" workingPeriod="12">da
+                                        <parameters>
+                                            <param name="param1" value="value17">
+                                                <p validate="false">finala</p>
+                                            </param>
+                                            <param name="param2" value="value22">param2 text
+						<pac id="pac">text al pac
+							<p validate="false">finala
+								<pam date="2009-12-12" year="2009" workingPeriod="12">-100</pam>
+                                                    </p>
+                                                </pac>
+                                            </param>
+                                        </parameters>
+                                    </pam>
+                                </p>
+                            </pac>
+                        </param>
+                    </parameters22>
+                </pa>
+            </xf:instance>
+        </xf:model>    
+    </head>
+    <body>
+	<h2>Synthesis of the ideas regarding the concept of an XForms extension action called "transform"</h2>
+	<ol>
+		<li>Stylesheet could be contained into an XForms data instance.</li>
+		<li>Stylesheet as an inline element, namely xf:model/exkf:transform referenced with "#id", just like an inline schema.</li>
+		<li>For external stylesheet, reference to it to be made by using doc() function or "file://".</li>
+		<li>Such action can be used for dynamic rendering of XHTML (+ XForms) markup, through xf:output with appropriate mediatype.</li>
+		<li>This action can have a "type" attribute, in order to designate the type of transformation
+			, which could be: XSLT, XQuery, or XProc (such transformation is to be done on client).</li>
+	</ol>
+
+        <h2>Test cases for eXSLTForms extension actions for XForms</h2>
+        <div class="testExplanation">Transform action: replaces instance('instance1')/v1 with XSL Transformed instance('instance2')/pac (with parameters)</div>
+        <xf:trigger class="testTrigger">
+            <xf:label>Transform action</xf:label>
+            <xf:action ev:event="DOMActivate">
+		<xf:transform
+			     type="xslt"
+			     origin="instance('instance2')/pac"
+			     transformer="../resources/transform-action-01.xsl" 
+			     ref="instance('instance1')/v1"
+			     param="instance('instance2')/parameters"/>
+            </xf:action>
+        </xf:trigger>
+        <div class="testExplanation">Transform action: replaces instance('instance1')/v1 with XSLTransformed instance('instance2')/pac (without parameters)</div>
+        <xf:trigger class="testTrigger">
+            <xf:label>Transform action</xf:label>
+            <xf:action ev:event="DOMActivate">
+		    <xf:transform
+				 type="xslt"
+				 origin="instance('instance2')/pac"
+				 transformer="../resources/transform-action-01.xsl" 
+				 ref="instance('instance1')/v1"/>		    
+            </xf:action>
+        </xf:trigger>
+    </body>
+</html>

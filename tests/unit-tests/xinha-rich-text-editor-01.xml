@@ -36,6 +36,19 @@
 						plugins: [],
 						configOptions:
 						{
+						toolbar: [
+						['popupeditor'],
+						['separator','formatblock','fontname','fontsize','bold','italic','underline','strikethrough'],
+						['separator','forecolor','hilitecolor','textindicator'],
+						['separator','subscript','superscript'],
+						['linebreak','separator','justifyleft','justifycenter','justifyright','justifyfull'],
+						['separator','insertorderedlist','insertunorderedlist','outdent','indent'],
+						['separator','inserthorizontalrule','createlink','insertimage','inserttable'],
+						['linebreak','separator','undo','redo','selectall','print'], (Xinha.is_gecko ? [] :
+						['cut','copy','paste','overwrite','saveas']),
+						['separator','killword','clearfonts','removeformat','toggleborders','splitblock'],
+						['separator','htmlmode','showhelp']
+						],						
 						width: 'auto', height: 'auto'
 						}
 						}
@@ -62,8 +75,8 @@
 						['separator','inserthorizontalrule','createlink','insertimage','inserttable'],
 						['linebreak','separator','undo','redo','selectall','print'], (Xinha.is_gecko ? [] :
 						['cut','copy','paste','overwrite','saveas']),
-						['separator','killword','clearfonts','removeformat','toggleborders','splitblock','lefttoright', 'righttoleft'],
-						['separator','htmlmode','showhelp','about']
+						['separator','killword','clearfonts','removeformat','toggleborders','splitblock'],
+						['separator','htmlmode','showhelp']
 						],
 						width: '840px', height: '280px'
 						}

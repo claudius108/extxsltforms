@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../resources/xsltforms/xsltforms.xsl" type="text/xsl"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:exfk="http://kuberam.ro/exsltforms" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <title>YUI rich text editor</title>
+	<meta name="eXSLTFormsDataInstancesViewer" content="yes"/>
+	<style language="text/css">
+		<![CDATA[
+			 @namespace xf url("http://www.w3.org/2002/xforms");
+			 xf|trigger {float:left;margin-right:100px;margin-bottom:25px;}
+			 #outputSavedContent .xforms-label {margin-bottom:25px;margin-right:490px;font:bold 14px verdana;}
+			 ]]>
+	</style>
+        <xf:model id="m">
+            <xf:instance id="i0">
+                <v xmlns="">
+                    <description>
+			    &lt;p&gt;&lt;strong&gt;&lt;span style="font-size: 16px;"&gt;Instructions for testing the integration of YUI Editor and SimpleEditor&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
+			    &lt;p&gt;In order to save the editor content to bounded node, please modify this text and leave the editor.&lt;/p&gt;
+			</description>
+                </v>
+            </xf:instance>
+	    <xf:instance id="i1">
+		    <Address xmlns="">
+			    <LocationStreet date="2010-05-01">Street 1 </LocationStreet>
+			    <LocationStreet date="2010-05-02">Street 2 </LocationStreet>
+			    <LocationStreet date="2010-05-03">Street 3 </LocationStreet>
+		    </Address>
+        </xf:instance>
+        </xf:model>
+    </head>
+    <body class="yui-skin-sam">
+        <xf:trigger id="triggerHome">
+            <xf:label>Home</xf:label>
+            <xf:action ev:event="DOMActivate">
+		    <xf:load resource="../../index/index.xml"/>
+            </xf:action>
+        </xf:trigger>
+	<xf:trigger>
+		<xf:label>Download extension</xf:label>
+		<xf:action ev:event="DOMActivate">
+			<xf:load resource="http://sourceforge.net/projects/extxsltforms/files/"/>
+		</xf:action>
+        </xf:trigger>
+        <p>
+            <xf:output id="outputSavedContent" ref="instance('i0')/description">
+                <xf:label>Saved editor content: </xf:label>
+            </xf:output>
+        </p>
+            <xf:textarea ref="instance('i0')/description" appearance="exfk:YUIEditor" incremental="true">
+                <xf:label>YUI editor 1 (it has @incremental = "true"):</xf:label>
+                <xf:extension>
+			<exfk:rteOptions>{YUIeditorType: 'Editor', height: '300px', width: '600px', animate: true, dompath: true, focusAtStart: true, autoHeight: true}</exfk:rteOptions>
+                </xf:extension>
+            </xf:textarea>
+	    <xf:textarea ref="instance('i0')/description" appearance="exfk:YUIEditor">
+                <xf:label>YUI editor 2:</xf:label>
+                <xf:extension>
+			<exfk:rteOptions>
+			{
+				YUIeditorType: 'Editor',
+				height: '150px',
+				width: '380px',
+				animate: true,
+				toolbar: {
+					titlebar: 'My Editor',
+					limitCommands: true,
+					collapse: true,
+					buttons: [
+						{ group: 'textstyle', label: 'Font Style',
+						buttons: [
+							{ type: 'push', label: 'Bold', value: 'bold' },
+							{ type: 'push', label: 'Italic', value: 'italic' },
+							{ type: 'push', label: 'Underline', value: 'underline' },
+							{ type: 'separator' },
+							{ type: 'select', label: 'Arial', value: 'fontname', disabled: true,
+							menu: [
+								{ text: 'Arial', checked: true },
+								{ text: 'Arial Black' },
+								{ text: 'Comic Sans MS' },
+								{ text: 'Courier New' },
+								{ text: 'Lucida Console' },
+								{ text: 'Tahoma' },
+								{ text: 'Times New Roman' },
+								{ text: 'Trebuchet MS' },
+								{ text: 'Verdana' }
+							]
+							},
+							{ type: 'spin', label: '13', value: 'fontsize', range: [ 9, 75 ], disabled: true },
+							{ type: 'separator' },
+							{ type: 'color', label: 'Font Color', value: 'forecolor', disabled: true },
+							{ type: 'color', label: 'Background Color', value: 'backcolor', disabled: true }
+						]
+						}
+					]
+				}
+			}
+			</exfk:rteOptions>
+                </xf:extension>
+            </xf:textarea>
+<!-- 	    <h2>Editors within a xf:repeat</h2> -->
+<!-- 	    <xf:repeat nodeset="instance('i1')/LocationStreet"> -->
+<!-- 		    <xf:textarea ref="." appearance="exfk:YUIEditor"> -->
+<!-- 			    <xf:label>YUI editor:</xf:label> -->
+<!-- 			    <xf:extension> -->
+<!-- 				    <exfk:rteOptions>{YUIeditorType: 'SimpleEditor', height: '100px', width: '400px', animate: true, dompath: true, focusAtStart: true, autoHeight: true}</exfk:rteOptions> -->
+<!-- 			    </xf:extension> -->
+<!--             </xf:textarea> -->
+<!--     </xf:repeat> -->
+    </body>
+</html>
