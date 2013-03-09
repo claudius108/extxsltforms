@@ -32,7 +32,7 @@
 		<kert:description>
 			This test is for rendering CKEditor editor. If the editors are rendered well, the test is passed.
 		</kert:description>
-		<kert:test-url>ckeditor-rich-text-editor.xml</kert:test-url>
+		<kert:test-url>ckeditor-rich-text-editor-01.xml</kert:test-url>
 		<kert:source-url></kert:source-url>
 		<kert:assertion>//result-token</kert:assertion>
 		<kert:timeout />
@@ -46,13 +46,13 @@
 	</kert:test>
 	<kert:test id="2">
 		<kert:author>Claudius Teodorescu</kert:author>
-		<kert:title>CKEditor</kert:title>
+		<kert:title>Dojo rich text editor</kert:title>
 		<kert:version>0.1</kert:version>
 		<kert:description>
 			This test is for rendering Dojo rich text editor. If the editors are rendered well, the test is
 			passed.
 		</kert:description>
-		<kert:test-url>dojo-rich-text-editor.xml</kert:test-url>
+		<kert:test-url>dojo-rich-text-editor-01.xml</kert:test-url>
 		<kert:source-url></kert:source-url>
 		<kert:assertion>//result-token</kert:assertion>
 		<kert:timeout />
@@ -66,12 +66,12 @@
 	</kert:test>
 	<kert:test id="3">
 		<kert:author>Claudius Teodorescu</kert:author>
-		<kert:title>CKEditor</kert:title>
+		<kert:title>EditArea</kert:title>
 		<kert:version>0.1</kert:version>
 		<kert:description>
 			This test is for rendering EditArea. If the editors are rendered well, the test is passed.
 		</kert:description>
-		<kert:test-url>editarea-code-editor.xml</kert:test-url>
+		<kert:test-url>editarea-code-editor-01.xml</kert:test-url>
 		<kert:source-url></kert:source-url>
 		<kert:assertion>//result-token</kert:assertion>
 		<kert:timeout />
@@ -91,7 +91,7 @@
 			This test is for rendering Xinha rich text editor. If the editors are rendered well, the test is
 			passed.
 		</kert:description>
-		<kert:test-url>xinha-rich-text-editor.xml</kert:test-url>
+		<kert:test-url>xinha-rich-text-editor-01.xml</kert:test-url>
 		<kert:source-url></kert:source-url>
 		<kert:assertion>//result-token</kert:assertion>
 		<kert:timeout />
@@ -102,7 +102,46 @@
 		<kert:total-test-time />
 		<kert:type>unattended</kert:type>
 		<kert:assertion-type>assert-xml</kert:assertion-type>
-	</kert:test>	
+	</kert:test>
+	<kert:test id="5">
+		<kert:author>Claudius Teodorescu</kert:author>
+		<kert:title>YUI rich text editor</kert:title>
+		<kert:version>0.1</kert:version>
+		<kert:description>
+			This test is for rendering YUI rich text editors. If the editors are rendered well, the test is
+			passed.
+		</kert:description>
+		<kert:test-url>yui-rich-text-editors-01.xml</kert:test-url>
+		<kert:source-url></kert:source-url>
+		<kert:assertion>//result-token</kert:assertion>
+		<kert:timeout />
+		<kert:run-status timestamp="" />
+		<kert:development-status timestamp="" />
+		<kert:log />
+		<kert:loops-number />
+		<kert:total-test-time />
+		<kert:type>unattended</kert:type>
+		<kert:assertion-type>assert-xml</kert:assertion-type>
+	</kert:test>
+	<kert:test id="6">
+		<kert:author>Claudius Teodorescu</kert:author>
+		<kert:title>Transform action</kert:title>
+		<kert:version>0.1</kert:version>
+		<kert:description>
+			This test is for the transform action.
+		</kert:description>
+		<kert:test-url>transform-action-01.xml</kert:test-url>
+		<kert:source-url></kert:source-url>
+		<kert:assertion>//result-token</kert:assertion>
+		<kert:timeout />
+		<kert:run-status timestamp="" />
+		<kert:development-status timestamp="" />
+		<kert:log />
+		<kert:loops-number />
+		<kert:total-test-time />
+		<kert:type>unattended</kert:type>
+		<kert:assertion-type>assert-xml</kert:assertion-type>
+	</kert:test>
 	<kert:traceability-matrix />
 	<kert:test-tree>
 		<ul id="data">
@@ -110,6 +149,8 @@
 			<li id="tree-2" title="Test 2">Dojo rich text editor</li>
 			<li id="tree-3" title="Test 3">EditArea</li>
 			<li id="tree-4" title="Test 4">Xinha rich text editor</li>
+			<li id="tree-5" title="Test 5">YUI rich text editors</li>
+			<li id="tree-5" title="Test 5">Transform action</li>
 		</ul>
 	</kert:test-tree>
 </kert:test-plan>
