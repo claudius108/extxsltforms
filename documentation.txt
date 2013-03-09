@@ -29,13 +29,7 @@ The syntax for this set of nodes should be as follows:
 		<param name="param2" value="value2"/>
 	</parameters>
 
-Example:
-<xf:transform
-     type="xslt"
-     origin="instance('instance2')/pac"
-     transformer="test_xslt_action.xsl" 
-     ref="instance('instance1')/v1"
-     param="instance('instance2')/parameters"/>
+Example: see $exsltforms_HOME/tests/unit-tests/transform-action-01.xml.
 
 
 2. The replace action
@@ -50,8 +44,7 @@ An attribute containing an XPath expression that selects the set of nodes to be 
 target
 An attribute containing an XPath expression that selects the set of nodes being replaced by the replace action.
 
-Example:
-<xf:replace target="instance('i0')/bindings" origin="instance('i2')/pac"/>
+Example: see $exsltforms_HOME/tests/unit-tests/replace-action-01.xml.
 
 
 3. The @appearance = "exfk:CKEditor" of textarea element, which allows the integration of CKEditor (http://ckeditor.com) web based
@@ -63,36 +56,12 @@ Extension child elements:
 rteOptions (within the namespace exkf, see note on top of page)
 This extension child element allows user to specify the configuration options as a string.
 
-Example:
-            <xf:textarea ref="instance('i0')/description" appearance="exfk:CKEditor" incremental="true">
-                <xf:label>CKEditor editor 1 (it has @incremental = "true"):</xf:label>
-                <xf:extension>
-                    <exfk:rteOptions>{skin:'office2003'}</exfk:rteOptions>
-                </xf:extension>
-            </xf:textarea>
+Example: see $exsltforms_HOME/tests/unit-tests/ckeditor-rich-text-editor-01.xml.
+
 Note: In case one needs standard options of the editor, use this syntax for rteOptions element: <exfk:rteOptions>{}</exfk:rteOptions>.
 
 
-4. The @appearance = "exfk:TinyMCE" of textarea element, which allows the integration of TinyMCE (http://tinymce.moxiecode.com) web based
-rich text editor into XSLTForms.
-In case or @incremental="true", the content will be saved from time to time, according to changes.
-In case of @incremental="false" or @incremental misssing, the content will be saved when the user exit the editor.
-
-Extension child elements:
-rteOptions (within the namespace exkf, see note on top of page)
-This extension child element allows user to specify the configuration options as a string.
-
-Example:
-            <xf:textarea ref="instance('i0')/description" appearance="exfk:TinyMCE" incremental="true">
-                <xf:label>TinyMCE editor 2:</xf:label>
-                <xf:extension>
-                    <exfk:rteOptions>{mode : 'textareas', theme : 'advanced'}</exfk:rteOptions>
-                </xf:extension>
-            </xf:textarea>
-Note: In case one needs standard options of the editor, use this syntax for rteOptions element: <exfk:rteOptions>{}</exfk:rteOptions>.
-
-
-5. The @appearance = "exfk:EditArea" of textarea element, which allows the integration of EditArea (http://cdolivet.com) code editor
+4. The @appearance = "exfk:EditArea" of textarea element, which allows the integration of EditArea (http://cdolivet.com) code editor
 into XSLTForms.
 The content has to be saved by pressing the "Save" button.
 
@@ -100,30 +69,12 @@ Extension child elements:
 rteOptions (within the namespace exkf, see note on top of page)
 This extension child element allows user to specify the configuration options as a string.
 
-Example:
-            <xf:textarea ref="instance('i0')/description" appearance="exfk:EditArea">
-                <xf:label>EditArea textarea:</xf:label>
-                <xf:extension>
-                    <exfk:rteOptions>
-			{
-			start_highlight: true
-			,allow_toggle: false
-			,toolbar: 'new_document, save, load, search, go_to_line, |, undo, redo, |, select_font, |, syntax_selection, |, change_smooth_selection, highlight, reset_highlight, |, help'
-			,word_wrap: true
-			,language: 'en'
-			,syntax: 'xquery'
-			,min_height: 350
-			,min_width: 900
-			,syntax_selection_allow: 'xquery,css,html,js,xml'
-			//,is_multi_files: true
-			}
-		    </exfk:rteOptions>
-                </xf:extension>
-            </xf:textarea>
+Example: see $exsltforms_HOME/tests/unit-tests/editarea-code-editor-01.xml.
+
 Note: In case one needs standard options of the editor, use this syntax for rteOptions element: <exfk:rteOptions>{}</exfk:rteOptions>.
 
 
-6. The @appearance = "exfk:YUIEditor" of textarea element, which allows the integration of YUI Editor or SimpleEditor
+5. The @appearance = "exfk:YUIEditor" of textarea element, which allows the integration of YUI Editor or SimpleEditor
  (http://developer.yahoo.com/yui/editor/) web based rich text editor into XSLTForms.
 In case or @incremental="true", the content will be saved from time to time, according to changes.
 In case of @incremental="false" or @incremental misssing, the content will be saved when the user exit the editor.
@@ -132,13 +83,7 @@ Extension child elements:
 rteOptions (within the namespace exkf, see note on top of page)
 This extension child element allows user to specify the configuration options as a string.
 
-Example:
-	<xf:textarea ref="." appearance="exfk:YUIEditor">
-		<xf:label>YUI editor:</xf:label>
-		    <xf:extension>
-			    <exfk:rteOptions>{YUIeditorType: 'SimpleEditor', height: '100px', width: '400px', animate: true, dompath: true, focusAtStart: true, autoHeight: true}</exfk:rteOptions>
-		</xf:extension>
-        </xf:textarea>
+Example: see $exsltforms_HOME/tests/unit-tests/yui-rich-text-editors-01.xml.
 
 Notes:
 a. The easiest way for styling the editor is to use @class="yui-skin-sam" for body element or for a div element wrapping the respective
@@ -147,7 +92,7 @@ b. In case you need YUI Editor instead of SimpleEditor, make this modification i
 c. In case one needs standard options of the editor, use this syntax for rteOptions element: <exfk:rteOptions>{}</exfk:rteOptions>.
 
 
-7. The @appearance = "exfk:DojoEditor" of textarea element, which allows the integration of Dojo Editor 
+6. The @appearance = "exfk:DojoEditor" of textarea element, which allows the integration of Dojo Editor 
 (http://www.dojotoolkit.org/reference-guide/dijit/Editor.html) web based rich text editor into XSLTForms.
 In case or @incremental="true", the content will be saved from time to time, according to changes.
 In case of @incremental="false" or @incremental misssing, the content will be saved when the user exit the editor.
@@ -156,13 +101,7 @@ Extension child elements:
 rteOptions (within the namespace exkf, see note on top of page)
 This extension child element allows user to specify the configuration options as a string.
 
-Example:
-	    <xf:textarea ref="instance('i0')/description" appearance="exfk:DojoEditor">
-		    <xf:label>CKEditor editor (it has @incremental = "true"):</xf:label>
-		    <xf:extension>
-			    <exfk:rteOptions>{skin:'office2003'}</exfk:rteOptions>
-		    </xf:extension>
-	    </xf:textarea>
+Example: see $exsltforms_HOME/tests/unit-tests/dojo-rich-text-editor-01.xml.
 
 Notes:
 a. In order to style the editor, one should add <link rel="stylesheet" href="../../utils/dojo/dijit/themes/tundra/tundra.css"/> 
@@ -170,7 +109,7 @@ to head element of page and @class="tundra" to body element of page.
 b. In case one needs standard options of the editor, use this syntax for rteOptions element: <exfk:rteOptions>{}</exfk:rteOptions>.
 
 
-8. The @appearance = "exfk:Xinha" of textarea element, which allows the integration of Xinha (http://xinha.org) web based rich text
+7. The @appearance = "exfk:Xinha" of textarea element, which allows the integration of Xinha (http://xinha.org) web based rich text
 editor into XSLTForms.
 In case or @incremental="true", the content will be saved from time to time, according to changes.
 In case of @incremental="false" or @incremental misssing, the content will be saved when the user exit the editor.
@@ -179,35 +118,10 @@ Extension child elements:
 rteOptions (within the namespace exkf, see note on top of page)
 This extension child element allows user to specify the configuration options as a string.
 
-Example:
-	    <xf:textarea ref="instance('i0')/description" appearance="exfk:Xinha">
-		    <xf:label>CKEditor editor (it has @incremental = "true"):</xf:label>
-		    <xf:extension>
-			<exfk:rteOptions>
-				{
-				plugins: [ 'CharacterMap', 'ContextMenu', 'ListType', 'Stylist', 'SuperClean', 'TableOperations' ],
-				configOptions:
-					{
-					toolbar: [
-						['popupeditor'],
-						['separator','formatblock','fontname','fontsize','bold','italic','underline','strikethrough'],
-						['separator','forecolor','hilitecolor','textindicator'],
-						['separator','subscript','superscript'],
-						['linebreak','separator','justifyleft','justifycenter','justifyright','justifyfull'],
-						['separator','insertorderedlist','insertunorderedlist','outdent','indent'],
-						['separator','inserthorizontalrule','createlink','insertimage','inserttable'],
-						['linebreak','separator','undo','redo','selectall','print'], (Xinha.is_gecko ? [] : ['cut','copy','paste','overwrite','saveas']),
-						['separator','killword','clearfonts','removeformat','toggleborders','splitblock','lefttoright', 'righttoleft'],
-						['separator','htmlmode','showhelp','about']
-						], 
-					width: '940px', height: '480px' 
-					}
-				}
-			</exfk:rteOptions>
-		    </xf:extension>
-	    </xf:textarea>
+Example: see $exsltforms_HOME/tests/unit-tests/xinha-rich-text-editor-01.xml.
 
-9. The @appearance = "exfk:YUI2-DataTable" of HTML table element, which allows the integration of YUI2 DataTable
+
+8. The @appearance = "exfk:YUI2-DataTable" of HTML table element, which allows the integration of YUI2 DataTable
 widget (http://developer.yahoo.com/yui/datatable/) into XSLTForms.
 
 Extension child elements:
@@ -216,46 +130,4 @@ This extension child element allows user to specify the data formatters to be us
 exfk:paginator (within the namespace exkf, see note on top of page)
 This extension child element allows user to specify the attributes of datatable's paginator.
 
-Example:
-        <table id="dataTable" model="model2" xf:repeat-nodeset="instance('instance2')/services/s" appearance="exfk:YUI2-DataTable">
-            <caption>YUI2 datatable, showing usage of various column attributes, data formatter and paginator.</caption>
-            <tr>
-                <td exfk:hidden="true">
-                    <xf:output ref="id"/>
-                </td>
-		<td exfk:formatter="formatter1" exfk:width="20">
-                    <xf:output ref="crtNo">
-                        <xf:label>Crt. &lt;br/&gt;No.</xf:label>
-                    </xf:output>
-                </td>
-                <td exfk:sortable="true" exfk:width="200">
-                    <xf:output ref="docNo">
-                        <xf:label>Invoice No. (sortable)</xf:label>
-                    </xf:output>
-                </td>
-                <td exfk:sortable="true">
-                    <xf:output ref="data">
-                        <xf:label>Date (sortable)</xf:label>
-                    </xf:output>
-                </td>
-                <td exfk:width="400" exfk:sortable="true">
-                    <xf:output ref="nume">
-                        <xf:label>Supplier Name (sortable, editable)</xf:label>
-                    </xf:output>
-                </td>
-                <td exfk:sortable="true">
-                    <xf:output ref="valoareFacturaCuTVA">
-                        <xf:label>Invoice value (sortable)</xf:label>
-                    </xf:output>
-                </td>
-            </tr>
-            <xf:extension>
-                <exfk:formatters>
-                    <exfk:formatter name="formatter1">
-                        <exfk:definition>function( elCell, oRecord, oColumn, oData ) {
-							elCell.innerHTML = oRecord.getCount() + 1;}</exfk:definition>
-                    </exfk:formatter>
-                </exfk:formatters>
-                <exfk:paginator rowsPerPage="3"/>
-            </xf:extension>
-        </table>
+Example: see $exsltforms_HOME/tests/unit-tests/yui-rich-text-editors-01.xml.
