@@ -2903,9 +2903,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 		</xsl:template>
 	
 		
-		<xsl:template match="@at | @calculate | @caseref | @constraint | @context | @if | @index | @inner | @iterate | @nodeset | @origin | @outer | @readonly | @ref | @relevant | @required | @target | @targetref | @value | @while" mode="scriptattr" priority="1">
-			<xexpr><xsl:value-of select="."/></xexpr>
-		</xsl:template>
+		<xsl:template match="@at | @calculate | @caseref | @constraint | @context | @if | @index | @inner | @iterate | @nodeset | @origin | @outer | @readonly | @ref | @relevant | @required | @target | @targetref | @value | @while | @param" mode="scriptattr" priority="1"><xexpr>
+			
+		</xexpr></xsl:template>
 		<xsl:template match="@model[not(../@ref)]" mode="scriptattr" priority="1">
 			<xexpr>.</xexpr>
 		</xsl:template>
