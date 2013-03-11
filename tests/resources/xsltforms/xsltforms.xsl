@@ -681,7 +681,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 		<xsl:template match="xforms:setvalue|xforms:insert|xforms:delete|xforms:dispatch|xforms:action|xforms:load|xforms:toggle|xforms:send|xforms:setfocus" priority="2"/>
 		<xsl:template match="xforms:setindex|xforms:setnode|xforms:reset|xforms:refresh|xforms:rebuild|xforms:recalculate|xforms:revalidate|xforms:unload" priority="2"/>
 		<xsl:template match="xforms:hint|xforms:alert|xforms:help|xforms:value|xforms:item|xforms:itemset|xforms:choices|xforms:filename" priority="2"/>
-		<xsl:template match="xforms:model|xforms:show|xforms:hide|xforms:extension" priority="2"/>
+		<xsl:template match="xforms:model|xforms:show|xforms:hide|xforms:extension|xforms:transform|xforms:replace" priority="2"/>
 		<xsl:template match="xforms:*" priority="1">
 			<script type="text/javascript">
 				<xsl:text>XsltForms_browser.dialog.hide('statusPanel');
@@ -2903,9 +2903,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 		</xsl:template>
 	
 		
-		<xsl:template match="@at | @calculate | @caseref | @constraint | @context | @if | @index | @inner | @iterate | @nodeset | @origin | @outer | @readonly | @ref | @relevant | @required | @target | @targetref | @value | @while | @param" mode="scriptattr" priority="1"><xexpr>
-			
-		</xexpr></xsl:template>
+		<xsl:template match="@at | @calculate | @caseref | @constraint | @context | @if | @index | @inner | @iterate | @nodeset | @origin | @outer | @readonly | @ref | @relevant | @required | @target | @targetref | @value | @while | @param" mode="scriptattr" priority="1"><xexpr><xsl:value-of select="."/></xexpr></xsl:template>
 		<xsl:template match="@model[not(../@ref)]" mode="scriptattr" priority="1">
 			<xexpr>.</xexpr>
 		</xsl:template>

@@ -27,7 +27,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 exsltforms =
 {
-	version : '1.1.0',
+	version : '1.1.1',
 	registry : {
 		textarea2rte : {},
 		input2calendar : {},
@@ -164,26 +164,29 @@ exsltforms =
 	}
 })();
 
-function transform_action(xmlXPath, xslPath, parametersXPath, targetXPath, idExtElem) {
+function transform_action(subform, xmlXPath, xslPath, parametersXPath, targetXPath, idExtElem) {
+	this.subform = subform;
  	this.xmlBinding = XsltForms_xpath.get(xmlXPath);
 	this.xslPath = xslPath;
-	this.parametersBinding = parametersXPath? XsltForms_xpath.get(parametersXPath) : null;
+	this.parametersBinding = parametersXPath ? XsltForms_xpath.get(parametersXPath) : null;
 	this.targetBinding = XsltForms_xpath.get(targetXPath);
 	var context =  null;
 	this.context = XsltForms_xpath.get(context);
 	this.idExtElem = idExtElem;
 }
+
 transform_action.prototype = new XsltForms_abstractAction();
+
 transform_action.prototype.run = function(element, ctx) {
 	if (this.context) {
 		ctx = this.context.evaluate(ctx)[0];
 	}
 	if (!ctx) { return; }
-	var xmlString = XsltForms_browser.saveXML(this.xmlBinding.evaluate(ctx)[0])
-	, parametersXNode = this.parametersBinding !== null ? this.parametersBinding.evaluate(ctx)[0] : null
-	, targetString = XsltForms_browser.saveXML(this.targetBinding.evaluate(ctx)[0])
-	, xsltResult = eXSLTForms_xslt(xmlString, this.xslPath, parametersXNode)
-	;	
+	
+	var xmlString = XsltForms_browser.saveXML(this.xmlBinding.evaluate(ctx)[0]);	
+	var parametersXNode = this.parametersBinding !== null ? this.parametersBinding.evaluate(ctx)[0] : null;
+	var targetString = XsltForms_browser.saveXML(this.targetBinding.evaluate(ctx)[0]);	
+	var xsltResult = eXSLTForms_xslt(xmlString, this.xslPath, parametersXNode);
 	if (!XsltForms_browser.isIE) {
 		var serializer = new XMLSerializer();
 		var parser = new DOMParser();		
@@ -192,6 +195,7 @@ transform_action.prototype.run = function(element, ctx) {
 		target_DOMNode.removeChild(first);
 		target_DOMNode.appendChild(xsltResult);
 		var newTargetString = serializer.serializeToString( target_DOMNode );
+//		alert(newTargetString);		
 	} else {
 		var resultDoc = new ActiveXObject("Microsoft.XMLDOM");
 		resultDoc.async = "false";
@@ -224,18 +228,17 @@ function eXSLTForms_xslt(xmlString, xslPath, parametersXNode) {
 	
 		var req = XsltForms_browser.openRequest("get", xslPath, false);
 		req.send(null);
-		var xsltDoc = req.responseXML;
+		var xsltDoc = req.responseXML;	
 				
 		var xsltProcessor = new XSLTProcessor();
 		xsltProcessor.importStylesheet(xsltDoc);
 
 		if (parametersXNode !== null) {	
-			for (var i=0; i < parametersXNode.childNodes.length; ++i)
-				{
+			for (var i=0; i < parametersXNode.childNodes.length; ++i) {
 				xsltProcessor.setParameter(null, parametersXNode.childNodes[i].attributes[0].nodeValue, parametersXNode.childNodes[i].attributes[1].nodeValue);
 				}
-		} else {}
-
+		}
+		
 		return xsltProcessor.transformToFragment(xmlDoc, document);
 	} else {
 		var xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
@@ -264,6 +267,7 @@ function replace_action(idExtElem) {
 	this.idExtElem = idExtElem;
 }
 replace_action.prototype = new XsltForms_abstractAction();
+
 replace_action.prototype.run = function(element, ctx) {
 	if (this.context) {
 		ctx = this.context.evaluate(ctx)[0];
@@ -274,4 +278,4 @@ replace_action.prototype.run = function(element, ctx) {
 	var xf_model_extensions = document.getElementById("xf-model-extensions");
 	XsltForms_browser.events.dispatch(xf_model_extensions,"xforms-replace-insert_replace" + this.idExtElem);
 	XsltForms_browser.events.dispatch(xf_model_extensions,"xforms-replace-delete_replace" + this.idExtElem);
-	}
+}

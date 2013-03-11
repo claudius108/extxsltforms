@@ -108,56 +108,65 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 		</xsl:when>
 	</xsl:choose>-->
-        <xsl:variable name="idExtElem" select="count(preceding::xforms:transform|ancestor::xforms:transform)"/>
-        <xsl:variable name="idInsertElem" select="concat('xsltforms_insert_transform_', $idExtElem)"/>
-        <xsl:variable name="idDeleteElem" select="concat('xsltforms_delete_transform_', $idExtElem)"/>
-	<xsl:if test="@param">
-		<xsl:variable name="kxexprs">
-		<xexprs xmlns="">
-			<xexpr>
-				<xsl:value-of select="@param"/>
-			</xexpr>
-		</xexprs>
-		</xsl:variable>
-		<xsl:choose>
-			<xsl:when test="function-available('xalan:nodeset')">
-				<xsl:call-template name="xps">
-					<xsl:with-param name="ps" select="xalan:nodeset($kxexprs)/xexprs"/>
-				</xsl:call-template>
-			</xsl:when>
-			<xsl:when test="function-available('exslt:node-set')">
-				<xsl:call-template name="xps">
-					<xsl:with-param name="ps" select="exslt:node-set($kxexprs)/xexprs"/>
-				</xsl:call-template>
-			</xsl:when>
-			<xsl:otherwise>
-				<xsl:call-template name="xps">
-					<xsl:with-param name="ps" select="msxsl:node-set($kxexprs)/xexprs"/>
-				</xsl:call-template>
-			</xsl:otherwise>
-		</xsl:choose>
-	</xsl:if>
-        <xsl:value-of select="concat('var xsltforms_transform_', $idExtElem, ' = new transform_action(&#34;', @origin, '&#34;, &#34;', @transformer, '&#34;, &#34;', @param, '&#34;, &#34;', @ref, '&#34;, &#34;transform_', $idExtElem, '&#34;);')"/>
-        <xsl:value-of select="concat('var ', $idInsertElem, ' = new XsltForms_insert(xsltforms_subform,&#34;', @ref)"/><xsl:text>",null,null,null,"after","instance('xf-instance-extensions')",null,null,null,null);</xsl:text>
-        <xsl:value-of select="concat('new XsltForms_listener(document.getElementById(&#34;xf-model-extensions&#34;),&#34;xforms-transform-insert_transform_', $idExtElem, '&#34;,null,function(evt) {XsltForms_browser.run(', $idInsertElem, ',XsltForms_browser.getId(evt.currentTarget ? evt.currentTarget : evt.target),evt,false,true);});')"/>
-        <xsl:value-of select="concat('var ', $idDeleteElem, ' = new XsltForms_delete(xsltforms_subform,&#34;', @ref, '&#34;,null,null,null,null,null,null,null);')"/>
-        <xsl:value-of select="concat('new XsltForms_listener(document.getElementById(&#34;xf-model-extensions&#34;),&#34;xforms-transform-delete_transform_', $idExtElem, '&#34;,null,function(evt) {XsltForms_browser.run(', $idDeleteElem, ',XsltForms_browser.getId(evt.currentTarget ? evt.currentTarget : evt.target),evt,false,true);});')"/>
-        <xsl:apply-templates select="*" mode="script"/>
+		<xsl:param name="parentworkid"/>
+		<xsl:param name="workid" select="concat(position(),'_',$parentworkid)"/>
+        <xsl:variable name="idInsertElem" select="concat('xsltforms_insert_transform_', $workid)"/>
+        <xsl:variable name="idDeleteElem" select="concat('xsltforms_delete_transform_', $workid)"/>
+        <xsl:variable name="paramAttr">
+        	<xsl:call-template name="toScriptBinding"><xsl:with-param name="p" select="@param"/></xsl:call-template>
+        </xsl:variable>       
+        <xsl:apply-templates select="@*" mode="scriptattr"/>
+		<xsl:if test="@param">
+			<xsl:variable name="kxexprs">
+			<xexprs xmlns="">
+				<xexpr>
+					<xsl:value-of select="@param"/>
+				</xexpr>
+			</xexprs>
+			</xsl:variable>
+			<xsl:choose>
+				<xsl:when test="function-available('xalan:nodeset')">
+					<xsl:call-template name="xps">
+						<xsl:with-param name="ps" select="xalan:nodeset($kxexprs)/xexprs"/>
+					</xsl:call-template>
+				</xsl:when>
+				<xsl:when test="function-available('exslt:node-set')">
+					<xsl:call-template name="xps">
+						<xsl:with-param name="ps" select="exslt:node-set($kxexprs)/xexprs"/>
+					</xsl:call-template>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:call-template name="xps">
+						<xsl:with-param name="ps" select="msxsl:node-set($kxexprs)/xexprs"/>
+					</xsl:call-template>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:if>
+		<js>
+	        <xsl:value-of select="concat('var xsltforms_transform_', $workid, ' = new transform_action(xsltforms_subform,&#34;', @origin, '&#34;, &#34;', @transformer, '&#34;, &#34;', @param, '&#34;, &#34;', @ref, '&#34;, &#34;transform_', $workid, '&#34;);')"/>
+	        <xsl:value-of select="concat('var ', $idInsertElem, ' = new XsltForms_insert(xsltforms_subform,&#34;', @ref)"/><xsl:text>",null,null,null,"after","instance('xf-instance-extensions')",null,null,null,null);</xsl:text>
+	        <xsl:value-of select="concat('new XsltForms_listener(xsltforms_subform,document.getElementById(&#34;xf-model-extensions&#34;),null,&#34;xforms-transform-insert_transform_', $workid, '&#34;,null,function(evt) {XsltForms_browser.run(', $idInsertElem, ',XsltForms_browser.getId(evt.currentTarget ? evt.currentTarget : evt.target),evt,false,true);});')"/>
+	        <xsl:value-of select="concat('var ', $idDeleteElem, ' = new XsltForms_delete(xsltforms_subform,&#34;', @ref, '&#34;,null,null,null,null,null,null,null);')"/>
+	        <xsl:value-of select="concat('new XsltForms_listener(xsltforms_subform,document.getElementById(&#34;xf-model-extensions&#34;),null,&#34;xforms-transform-delete_transform_', $workid, '&#34;,null,function(evt) {XsltForms_browser.run(', $idDeleteElem, ',XsltForms_browser.getId(evt.currentTarget ? evt.currentTarget : evt.target),evt,false,true);});')"/>
+		</js>
+        <xsl:apply-templates select="node()" mode="script">
+        	<xsl:with-param name="parentworkid" select="$workid"/>
+        </xsl:apply-templates>
     </xsl:template>
 
     <xsl:template match="xforms:replace" mode="script" priority="1">
-        <xsl:variable name="idExtElem" select="count(preceding::xforms:replace|ancestor::xforms:replace)"/>
-        <xsl:variable name="idInsertElem" select="concat('xsltforms_insert_replace', $idExtElem)"/>
-        <xsl:variable name="idDeleteElem" select="concat('xsltforms_delete_replace', $idExtElem)"/>
-        <xsl:value-of select="concat('var xsltforms_replace_', $idExtElem, ' = new replace_action(&#34;', $idExtElem, '&#34;);')"/>
+        <xsl:param name="workid" select="concat(position(),'_',$parentworkid)"/>
+        <xsl:variable name="idInsertElem" select="concat('xsltforms_insert_replace', $workid)"/>
+        <xsl:variable name="idDeleteElem" select="concat('xsltforms_delete_replace', $workid)"/>
+        <xsl:value-of select="concat('var xsltforms_replace_', $workid, ' = new replace_action(&#34;', $workid, '&#34;);')"/>
         <xsl:value-of select="concat('var ',$idInsertElem, ' = new XsltForms_insert(xsltforms_subform,&#34;', @ref, '&#34;,null,null,null,&#34;after&#34;,&#34;', @origin, '&#34;,null,null,null);')"/>
-        <xsl:value-of select="concat('new XsltForms_listener(document.getElementById(&#34;xf-model-extensions&#34;),&#34;xforms-replace-insert_replace', $idExtElem, '&#34;,null,function(evt) {XsltForms_browser.run(', $idInsertElem, ',XsltForms_browser.getId(evt.currentTarget ? evt.currentTarget : evt.target),evt,false,true);});')"/>
+        <xsl:value-of select="concat('new XsltForms_listener(xsltforms_subform,document.getElementById(&#34;xf-model-extensions&#34;),null,&#34;xforms-replace-insert_replace', $workid, '&#34;,null,function(evt) {XsltForms_browser.run(', $idInsertElem, ',XsltForms_browser.getId(evt.currentTarget ? evt.currentTarget : evt.target),evt,false,true);});')"/>
         <xsl:value-of select="concat('var ', $idDeleteElem, ' = new XsltForms_delete(xsltforms_subform,&#34;', @ref, '&#34;,null,null,null,null,null,null);')"/>
-        <xsl:value-of select="concat('new XsltForms_listener(document.getElementById(&#34;xf-model-extensions&#34;),&#34;xforms-replace-delete_replace', $idExtElem, '&#34;,null,function(evt) {XsltForms_browser.run(', $idDeleteElem, ',XsltForms_browser.getId(evt.currentTarget ? evt.currentTarget : evt.target),evt,false,true);});')"/>
+        <xsl:value-of select="concat('new XsltForms_listener(xsltforms_subform,document.getElementById(&#34;xf-model-extensions&#34;),null,&#34;xforms-replace-delete_replace', $workid, '&#34;,null,function(evt) {XsltForms_browser.run(', $idDeleteElem, ',XsltForms_browser.getId(evt.currentTarget ? evt.currentTarget : evt.target),evt,false,true);});')"/>
         <xsl:apply-templates select="*" mode="script"/>
     </xsl:template>
     
-		<xsl:template match="xforms:action" mode="script" priority="1">
+		<xsl:template match="xforms:action" mode="script" priority="2">
 			<xsl:param name="parentworkid"/>
 			<xsl:param name="workid" select="concat(position(),'_',$parentworkid)"/>
 			<xsl:apply-templates select="@*" mode="scriptattr"/>
@@ -179,7 +188,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 				<xsl:call-template name="toScriptParam"><xsl:with-param name="p" select="@iterate"/></xsl:call-template>
 				<xsl:text>)</xsl:text>
 				<xsl:for-each select="node()">
-					<xsl:if test="contains(':setvalue:insert:delete:action:toggle:send:setfocus:setindex:setnode:load:message:dispatch:rebuild:reset:show:hide:script:unload:transform:replace',concat(':',local-name(),':'))">
+					<xsl:if test="contains(':setvalue:insert:delete:action:toggle:send:setfocus:setindex:setnode:load:message:dispatch:rebuild:reset:show:hide:script:unload:transform:replace:',concat(':',local-name(),':'))">
 						<xsl:text>.add(</xsl:text>
 						<xsl:value-of select="$vn_pf"/>
 						<xsl:value-of select="local-name()"/>
