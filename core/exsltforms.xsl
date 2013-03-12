@@ -155,15 +155,21 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
     </xsl:template>
 
     <xsl:template match="xforms:replace" mode="script" priority="1">
+    	<xsl:param name="parentworkid"/>
         <xsl:param name="workid" select="concat(position(),'_',$parentworkid)"/>
         <xsl:variable name="idInsertElem" select="concat('xsltforms_insert_replace', $workid)"/>
         <xsl:variable name="idDeleteElem" select="concat('xsltforms_delete_replace', $workid)"/>
-        <xsl:value-of select="concat('var xsltforms_replace_', $workid, ' = new replace_action(&#34;', $workid, '&#34;);')"/>
-        <xsl:value-of select="concat('var ',$idInsertElem, ' = new XsltForms_insert(xsltforms_subform,&#34;', @ref, '&#34;,null,null,null,&#34;after&#34;,&#34;', @origin, '&#34;,null,null,null);')"/>
-        <xsl:value-of select="concat('new XsltForms_listener(xsltforms_subform,document.getElementById(&#34;xf-model-extensions&#34;),null,&#34;xforms-replace-insert_replace', $workid, '&#34;,null,function(evt) {XsltForms_browser.run(', $idInsertElem, ',XsltForms_browser.getId(evt.currentTarget ? evt.currentTarget : evt.target),evt,false,true);});')"/>
-        <xsl:value-of select="concat('var ', $idDeleteElem, ' = new XsltForms_delete(xsltforms_subform,&#34;', @ref, '&#34;,null,null,null,null,null,null);')"/>
-        <xsl:value-of select="concat('new XsltForms_listener(xsltforms_subform,document.getElementById(&#34;xf-model-extensions&#34;),null,&#34;xforms-replace-delete_replace', $workid, '&#34;,null,function(evt) {XsltForms_browser.run(', $idDeleteElem, ',XsltForms_browser.getId(evt.currentTarget ? evt.currentTarget : evt.target),evt,false,true);});')"/>
-        <xsl:apply-templates select="*" mode="script"/>
+        <xsl:apply-templates select="@*" mode="scriptattr"/>        
+        <js>
+	        <xsl:value-of select="concat('var xsltforms_replace_', $workid, ' = new replace_action(&#34;', $workid, '&#34;);')"/>
+	        <xsl:value-of select="concat('var ',$idInsertElem, ' = new XsltForms_insert(xsltforms_subform,&#34;', @ref, '&#34;,null,null,null,&#34;after&#34;,&#34;', @origin, '&#34;,null,null,null,null);')"/>
+	        <xsl:value-of select="concat('new XsltForms_listener(xsltforms_subform,document.getElementById(&#34;xf-model-extensions&#34;),null,&#34;xforms-replace-insert_replace', $workid, '&#34;,null,function(evt) {XsltForms_browser.run(', $idInsertElem, ',XsltForms_browser.getId(evt.currentTarget ? evt.currentTarget : evt.target),evt,false,true);});')"/>
+	        <xsl:value-of select="concat('var ', $idDeleteElem, ' = new XsltForms_delete(xsltforms_subform,&#34;', @ref, '&#34;,null,null,null,null,null,null,null);')"/>
+	        <xsl:value-of select="concat('new XsltForms_listener(xsltforms_subform,document.getElementById(&#34;xf-model-extensions&#34;),null,&#34;xforms-replace-delete_replace', $workid, '&#34;,null,function(evt) {XsltForms_browser.run(', $idDeleteElem, ',XsltForms_browser.getId(evt.currentTarget ? evt.currentTarget : evt.target),evt,false,true);});')"/>        
+        </js>
+        <xsl:apply-templates select="node()" mode="script">
+        	<xsl:with-param name="parentworkid" select="$workid"/>
+        </xsl:apply-templates>
     </xsl:template>
     
 		<xsl:template match="xforms:action" mode="script" priority="2">

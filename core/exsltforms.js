@@ -194,8 +194,7 @@ transform_action.prototype.run = function(element, ctx) {
 		var first = target_DOMNode.firstChild;
 		target_DOMNode.removeChild(first);
 		target_DOMNode.appendChild(xsltResult);
-		var newTargetString = serializer.serializeToString( target_DOMNode );
-//		alert(newTargetString);		
+		var newTargetString = serializer.serializeToString( target_DOMNode );	
 	} else {
 		var resultDoc = new ActiveXObject("Microsoft.XMLDOM");
 		resultDoc.async = "false";
@@ -266,6 +265,7 @@ function eXSLTForms_xslt(xmlString, xslPath, parametersXNode) {
 function replace_action(idExtElem) {
 	this.idExtElem = idExtElem;
 }
+
 replace_action.prototype = new XsltForms_abstractAction();
 
 replace_action.prototype.run = function(element, ctx) {
@@ -274,8 +274,7 @@ replace_action.prototype.run = function(element, ctx) {
 	}
     
 	if (!ctx) { return; }
-
 	var xf_model_extensions = document.getElementById("xf-model-extensions");
-	XsltForms_browser.events.dispatch(xf_model_extensions,"xforms-replace-insert_replace" + this.idExtElem);
+	XsltForms_browser.events.dispatch(xf_model_extensions,"xforms-replace-insert_replace" + this.idExtElem);	
 	XsltForms_browser.events.dispatch(xf_model_extensions,"xforms-replace-delete_replace" + this.idExtElem);
 }

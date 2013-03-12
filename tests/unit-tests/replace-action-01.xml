@@ -1,81 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="../../../utils/xsltforms/xsltforms.xsl" type="text/xsl"?><!--<?xsltforms-options debug="yes"?>-->
-<html eXSLTFormsDataInstancesViewer="true" xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xf="http://www.w3.org/2002/xforms">
-    <head>
-        <title>Test cases for eXSLTForms extension actions for XForms</title>
-        <style type="text/css">
+<?xml-stylesheet href="../resources/xsltforms/xsltforms.xsl" type="text/xsl"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<title>Test cases for eXSLTForms extension actions for XForms</title>
+		<style type="text/css">
 		<![CDATA[
 			.testTrigger {float:left;margin:auto;}
-			#triggerHome {float:left;margin-right:1300px;margin-bottom:25px;}
 			.testExplanation {float:left;width:100%;margin-top:20px;margin-bottom:5px;font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;font-size:14px;font-weight:bold;}
 			h2 {margin-top:70px;}
 		]]>
-	</style>
-        <xf:model id="model1">
-            <xf:instance id="instance1">
-                <v xmlns="">
-                    <pam date="2009-12-12" year="2009" workingPeriod="12">-100</pam>
-                    <v1 date="2009-12-12"> v1 text
-                        		<p>initial value</p>
-                    </v1>
-                    <bindings date="2009-12-12">bindings text
-                        		<binding>binding value</binding>
-                    </bindings>
-                </v>
-            </xf:instance>
-            <xf:instance id="instance2">
-                <pa xmlns="">
-                    <pam date="2009-12-12" year="2009" workingPeriod="12">-100</pam>
-                    <pac id="pac">text al pac
-				    <p validate="false">finala</p>
-                    </pac>
-                    <parameters>
-                        <param name="param1" value="value17"/>
-                        <param name="param2" value="value22"/>
-                    </parameters>
-                    <parameters22>
-                        <param name="param1" value="value17">
-                            <p validate="false">finala</p>
-                        </param>
-                        <param name="param2" value="value22">param2 text
-					<pac id="pac">text al pac
-						<p validate="false">finala
-							<pam date="2009-12-12" year="2009" workingPeriod="12">da
-                                        <parameters>
-                                            <param name="param1" value="value17">
-                                                <p validate="false">finala</p>
-                                            </param>
-                                            <param name="param2" value="value22">param2 text
-						<pac id="pac">text al pac
-							<p validate="false">finala
-								<pam date="2009-12-12" year="2009" workingPeriod="12">-100</pam>
-                                                    </p>
-                                                </pac>
-                                            </param>
-                                        </parameters>
-                                    </pam>
-                                </p>
-                            </pac>
-                        </param>
-                    </parameters22>
-                </pa>
-            </xf:instance>
-        </xf:model>
-    </head>
-    <body>
-	    <xf:trigger id="triggerHome">
-		    <xf:label>Home</xf:label>
-		    <xf:action ev:event="DOMActivate">
-			    <xf:load resource="../../index/index.xml"/>
-		    </xf:action>
-        </xf:trigger>
-        <h2>Test cases for eXSLTForms extension actions for XForms</h2>
-        <div class="testExplanation">Replace action: replaces instance('instance2')/pac with instance('instance1')/v1</div>
-        <xf:trigger class="testTrigger">
-            <xf:label>Replace action</xf:label>
-            <xf:action ev:event="DOMActivate">
-                <xf:replace ref="instance('instance2')/pac" origin="instance('instance1')/v1"/>
-            </xf:action>
-        </xf:trigger>
-    </body>
+		</style>
+		<xf:model id="model1">
+			<xf:instance id="instance1">
+				<v xmlns="">
+					<v1 date="2009-12-12">
+						replace successfull
+					</v1>
+				</v>
+			</xf:instance>
+			<xf:instance id="instance2">
+				<pa xmlns="">
+					<pac id="pac">
+						text al pac
+					</pac>
+				</pa>
+			</xf:instance>
+		</xf:model>
+	</head>
+	<body>
+		<h2>Test cases for eXSLTForms extension actions for XForms</h2>
+		<div class="testExplanation">
+			Replace action: replaces instance('instance2')/pac with instance('instance1')/v1
+			<br />
+			<xf:output value="instance('instance2')" mediatype="application/xhtml+xml">
+				<xf:label>Result: </xf:label>
+			</xf:output>
+		</div>
+		<xf:trigger class="testTrigger">
+			<xf:label>Replace action</xf:label>
+			<xf:action ev:event="DOMActivate">
+				<xf:replace ref="instance('instance2')/pac" origin="instance('instance1')/v1" />
+				<!-- <xf:insert ref="instance('instance2')/pac" origin="instance('instance1')/v1" /> -->
+				<!-- <xf:delete ref="instance('instance1')/v1" /> -->
+			</xf:action>
+		</xf:trigger>
+	</body>
 </html>
