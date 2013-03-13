@@ -48,7 +48,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
             <script src="{$exsltformsBaseURI}rte/rte.js" type="text/javascript">/* */</script>
             <xsl:variable name="rteConfigOptions">
                 <rteConfigOptions>
-                    <xsl:copy-of select="document('../rte/rte-config.xml')/rteConfigOptions/*"/>
+                    <xsl:copy-of select="document('../config/rte-config.xml')/rteConfigOptions/*"/>
                 </rteConfigOptions>
             </xsl:variable>
             <xsl:variable name="editorTypesOnPage">
@@ -69,7 +69,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
         </xsl:if>
         <xsl:if test="//xforms:textarea[starts-with(@appearance, 'exfk:YUI')] | //xhtml:table[starts-with(@appearance, 'exfk:YUI')]">
 		<!--load YUI 3 config file-->
-            <xsl:variable name="YUI3-config-options" select="document('../config/YUI-config.xml')/config-options"/>
+            <xsl:variable name="YUI3-config-options" select="document('../config/yui-config.xml')/config-options"/>
             <script type="text/javascript" src="{$YUI3-config-options/YUI3-seed-URI}" charset="utf-8">/**/</script>
             <script type="text/javascript" charset="utf-8">
 			exsltforms.registry[ 'YUI2in3base' ] = '<xsl:value-of select="$YUI3-config-options/YUI2in3-base"/>';
