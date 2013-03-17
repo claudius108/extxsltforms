@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="../resources/xsltforms/xsltforms.xsl" type="text/xsl"?>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:exfk="http://kuberam.ro/exsltforms" xmlns:xf="http://www.w3.org/2002/xforms"
-	xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	eXSLTFormsDataInstancesViewer="false">
+	xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<head>
 		<title>YUI DataTable</title>
 		<style type="text/css">
@@ -133,7 +132,8 @@
 		</table>
 		<h3>Example 2: this example adds the usage of inline cell editor.</h3>
 		<table id="dataTable2" xf:repeat-ref="instance('instance1')/invoices/invoice" appearance="exfk:YUI3-DataTable">
-			<caption>YUI3 datatable, showing usage of various column attributes, data formatter, paginator, and inline cell editor.</caption>
+			<caption>YUI3 datatable, showing usage of various column attributes, data formatter, paginator, and inline cell
+				editor.</caption>
 			<tr>
 				<td exfk:formatter="formatter1" exfk:hidden="true">
 					<xf:output ref="id">

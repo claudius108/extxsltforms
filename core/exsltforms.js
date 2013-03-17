@@ -117,16 +117,6 @@ exsltforms =
 				}
 			},
 		baseURI	: '',
-		dataInstancesViewer : {
-			render : function() {
-				var dataInstancesViewer = document.createElement('div');
-				dataInstancesViewer.setAttribute('id', 'dataInstancesViewerContainer') 
-				dataInstancesViewer.innerHTML = exsltforms.utils.dataInstancesViewer.content;
-				document.body.appendChild( dataInstancesViewer );
-			},
-			content : '<div id="showViewerButtonDiv"><button id="showViewerButton" type="button" onclick="dataViewer_getModelsIDs()">Expand Data Instances Viewer</button></div><div id="dataInstancesViewerDiv"/>'
-		},
-	
 		poll : function( condition ) {
 			if ( exsltforms.utils.pollingConditions[ condition ].testedValue() ) {
 				exsltforms.utils.pollingConditions[ condition ].executedFunction();
@@ -135,16 +125,7 @@ exsltforms =
 			}
 		},
 		pollTestedValues : {},
-		pollingConditions : {
-			dataInstancesViewerRendering : {
-				testedValue : function() {
-					return ( document.body != null );
-				},
-				executedFunction : function() {
-					exsltforms.utils.dataInstancesViewer.render();
-				}
-			}
-		}
+		pollingConditions : {}
 	}
 };
 //set the module's base URL
@@ -152,17 +133,6 @@ exsltforms =
 	var scriptUri = document.querySelector("script[src*='" + sModuleName + "']").src;
 	window[sModuleNS ? sModuleNS : sModuleName].utils.baseURI = scriptUri.substring(0, scriptUri.indexOf("core/" + sModuleName + ".js"));
 })('exsltforms');
-
-//load the data instances viewer, if needed
-(function(){
-	var html = document.documentElement;
-	if ( html.attributes[ 'eXSLTFormsDataInstancesViewer' ] ) {
-		if ( html.attributes[ 'eXSLTFormsDataInstancesViewer' ].nodeValue == 'true') {
-			exsltforms.utils.loader( exsltforms.utils.baseURI + 'dataInstancesViewer/dataInstancesViewer.css', 'css' );
-			exsltforms.utils.loader( exsltforms.utils.baseURI + 'dataInstancesViewer/dataInstancesViewer.js', 'js' );
-		}
-	}
-})();
 
 function transform_action(subform, xmlXPath, xslPath, parametersXPath, targetXPath, idExtElem) {
 	this.subform = subform;

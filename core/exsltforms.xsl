@@ -278,7 +278,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 				//define formatters
 				<xsl:for-each select="xforms:extension/exfk:formatters/exfk:formatter">
 					var <xsl:value-of select="@name"/> = <xsl:value-of select="normalize-space(exfk:definition)"/>;
-					//Y.DataTable.BodyView.Formatters.<xsl:value-of select="@name"/> = <xsl:value-of select="@name"/>;
 				</xsl:for-each>
 				//define editors
 				<xsl:for-each select="xforms:extension/exfk:editors/exfk:editor">
