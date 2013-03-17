@@ -2860,11 +2860,6 @@ XsltForms_binding.prototype.evaluate = function(ctx, depsNodes, depsId, depsElem
 		var exprCtx = new XsltForms_exprContext(!ctx || (this.model && this.model !== document.getElementById(XsltForms_browser.getMeta(ctx.ownerDocument.documentElement, "model")).xfElement) ? this.model ? this.model.getInstanceDocument().documentElement : XsltForms_globals.defaultModel.getInstanceDocument().documentElement : ctx,
 			null, null, null, null, ctx, depsNodes, depsId, depsElements, this.model);
 		result = this.xpath.evaluate(exprCtx);
-		var a = exprCtx.node;
-		for (prop in a) {
-			//alert(prop + ": " + a[prop]);
-		}
-		//alert(result);
 	}
 	XsltForms_browser.assert(this.type || !result || typeof result === "object", "Binding evaluation didn't returned a nodeset but '"+(typeof result === "object" ? "" : result)+"' for " + (this.bind ? "bind: " + this.bind : "XPath expression: " + this.xpath.expression));
 	switch (this.type) {

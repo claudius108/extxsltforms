@@ -72,38 +72,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 		<!--load YUI 3 config file-->
             <xsl:variable name="YUI3-config-options" select="document('../config/yui-config.xml')/config-options"/>
             <script type="text/javascript" src="{$YUI3-config-options/yui3-seed-url}" charset="utf-8">/**/</script>
-            <script type="text/javascript" charset="utf-8">
-<!-- 				YUI().use('datatable', function (Y) { -->
-<!-- 				    // DataTable is available and ready for use. Add implementation -->
-<!-- 				    // code here. -->
-<!-- 				}); -->
-
-				
-							
-				
-				           
-            
-<!-- 			exsltforms.registry[ 'YUI2in3base' ] = '<xsl:value-of select="$YUI3-config-options/yui2in3-base-url"/>'; -->
-<!-- 			var YGlobal = YUI({ -->
-<!-- 				filter: 'debug', -->
-<!-- 				groups: { -->
-<!-- 					yui2: { -->
-<!-- 						base: exsltforms.registry.YUI2in3base, -->
-<!-- 						patterns:  { -->
-<!-- 							'yui2-': { -->
-<!-- 							configFn: function(me) { -->
-<!-- 								if(/-skin|reset|fonts|grids|base/.test(me.name)) { -->
-<!-- 								me.type = 'css'; -->
-<!-- 								me.path = me.path.replace(/\.js/, '.css'); -->
-<!-- 								me.path = me.path.replace(/\/yui2-skin/, '/assets/skins/sam/yui2-skin'); -->
-<!-- 								} -->
-<!-- 							} -->
-<!-- 							} -->
-<!-- 						} -->
-<!-- 					} -->
-<!-- 				} -->
-<!-- 			}); -->
-		</script>
         </xsl:if>
     </xsl:template>
 
@@ -289,7 +257,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 					<xsl:for-each select="xhtml:tr/xhtml:td">
 						{
 							key: "<xsl:value-of select="xforms:*/@ref"/>",
-							<xsl:for-each select="@*">
+							<xsl:for-each select="@*[name() != 'exfk:sortable']">
 								<xsl:value-of select="concat(substring-after(name(), 'exfk:'), ': ', ., ', ')"/>
 							</xsl:for-each>
 							label: "<xsl:value-of select=".//xforms:label"/>"
@@ -324,7 +292,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 				var myDataTable = new Y.DataTable({
 					columnset: columns
 					<xsl:if test="xhtml:caption">
-						,caption: "<xsl:value-of select="xhtml:caption"/>"
+						,caption: "<xsl:value-of select="normalize-space(xhtml:caption)"/>"
 					</xsl:if>
 					,sortable: sortableColumns
 				});			
