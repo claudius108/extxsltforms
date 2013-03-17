@@ -1,10 +1,13 @@
 exsltforms is an open source project comprising XForms extension actions / elements and widgets for the open source XForms processor called XSLTForms
  (see http://sourceforge.net/projects/xsltforms/).
 
-Version 1.1.1 - 2013.
-1. This version of exsltforms works with the revision ? of XSLTForms, as of ?.
- 
-
+Version 1.1.1 - 2013.03.17
+Feature #369: Change global namespace of the project to exsltforms (check installation.txt, as installations steps changed)
+Feature #370: Version 1.7.1 works with r. 571 of XSLTForms
+Feature #371: Remove support for TinyMCE, as it is natively supported by XSLTForms
+Feature #372: Remove support for data instance viewer, as it is natively supported by XSLTForms
+Feature #373: Replace support for YUI2 Datatable with support for YUI3 Datatable
+Feature #375: exsltforms works with YUI 3.9.0 Datatable (except pagination and inline cell editor)
 
 Version 1.0.9 - 2011.12.08
 1. This version of exsltforms works with the revision 521 of XSLTForms, as of 2011-12-08.
