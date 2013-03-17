@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../resources/xsltforms/xsltforms.xsl" type="text/xsl"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:exfk="http://kuberam.ro/exsltforms" xmlns:xf="http://www.w3.org/2002/xforms"
+	xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	eXSLTFormsDataInstancesViewer="false">
+	<head>
+		<title>YUI DataTable</title>
+		<style type="text/css">
+			/*margin and padding on body element
+			can introduce errors in determining
+			element position and are not
+			recommended;
+			we turn them off as a foundation for YUI
+			CSS treatments. */
+			body {
+			padding:0;
+			}
+			#dataTable {
+			float:left;
+			width:85%;
+			margin-left: 50px;
+			}
+		</style>
+		<xf:model id="model1">
+			<xf:instance id="instance1">
+				<doc id="" xmlns="">
+					<invoices>
+						<invoice>
+							<id>1</id>
+							<docNo>0023454</docNo>
+							<data>1999-01-23</data>
+							<nume>Supplier name 1</nume>
+							<amount>234.32</amount>
+						</invoice>
+						<invoice>
+							<id>7</id>
+							<docNo>1345478</docNo>
+							<data>2000-01-23</data>
+							<nume>Supplier name 4</nume>
+							<amount>484.25</amount>
+						</invoice>
+						<invoice>
+							<id>3</id>
+							<docNo>5489034</docNo>
+							<data>1999-05-19</data>
+							<nume>Supplier name 2</nume>
+							<amount>576.90</amount>
+						</invoice>
+						<invoice>
+							<id>5</id>
+							<docNo>4367843</docNo>
+							<data>1999-08-09</data>
+							<nume>Supplier name 3</nume>
+							<amount>349.00</amount>
+						</invoice>
+						<invoice>
+							<id>16</id>
+							<docNo>1187904</docNo>
+							<data>2000-04-28</data>
+							<nume>Supplier name 5</nume>
+							<amount>987.30</amount>
+						</invoice>
+						<invoice>
+							<id>22</id>
+							<docNo>4376891</docNo>
+							<data>2001-09-30</data>
+							<nume>Supplier name 7</nume>
+							<amount>2000.00</amount>
+						</invoice>
+						<invoice>
+							<id>17</id>
+							<docNo>9804521</docNo>
+							<data>2001-01-23</data>
+							<nume>Supplier name 6</nume>
+							<amount>108.00</amount>
+						</invoice>
+					</invoices>
+				</doc>
+			</xf:instance>
+		</xf:model>
+	</head>
+	<body class="yui3-skin-sam  yui-skin-sam">
+		<h2>Examples on how to use YUI DataTable widget integrated into XSLTForms</h2>
+		<h3>Example 1: usage of various column attributes, data formatter, and paginator.</h3>
+		<table id="dataTable1" xf:repeat-ref="instance('instance1')/invoices/invoice" model="model1" appearance="exfk:YUI3-DataTable">
+			<caption>YUI3 datatable, showing usage of various column attributes, data formatter, and paginator.</caption>
+			<tr>
+				<td exfk:formatter="formatter1" exfk:hidden="true">
+					<xf:output ref="id">
+						<xf:label>Crt. &lt;br/&gt;No.</xf:label>
+					</xf:output>
+				</td>
+				<td exfk:sortable="true" exfk:width="200">
+					<xf:output ref="docNo">
+						<xf:label>Invoice No.</xf:label>
+					</xf:output>
+				</td>
+				<td exfk:sortable="true">
+					<xf:output ref="data">
+						<xf:label>Date</xf:label>
+					</xf:output>
+				</td>
+				<td exfk:width="400" exfk:sortable="true">
+					<xf:output ref="nume">
+						<xf:label>Supplier Name (editable)</xf:label>
+					</xf:output>
+				</td>
+				<td exfk:sortable="true" exfk:formatter="formatter2">
+					<xf:output ref="amount">
+						<xf:label>Invoice value</xf:label>
+					</xf:output>
+				</td>
+			</tr>
+			<xf:extension>
+				<exfk:formatters>
+					<exfk:formatter name="formatter1">
+						<exfk:definition>
+							function(o) {
+							return o.rowIndex + 1;
+							}
+						</exfk:definition>
+					</exfk:formatter>
+					<exfk:formatter name="formatter2">
+						<exfk:definition>
+							function(o) {
+							return "$" + o.value;
+							}
+						</exfk:definition>
+					</exfk:formatter>
+				</exfk:formatters>
+				<exfk:paginator rowsPerPage="3" />
+			</xf:extension>
+		</table>
+		<h3>Example 2: this example adds the usage of inline cell editor.</h3>
+		<table id="dataTable2" xf:repeat-ref="instance('instance1')/invoices/invoice" appearance="exfk:YUI3-DataTable">
+			<caption>YUI3 datatable, showing usage of various column attributes, data formatter, paginator, and inline cell editor.</caption>
+			<tr>
+				<td exfk:formatter="formatter1" exfk:hidden="true">
+					<xf:output ref="id">
+						<xf:label>Crt. &lt;br/&gt;No.</xf:label>
+					</xf:output>
+				</td>
+				<td exfk:sortable="true" exfk:width="200">
+					<xf:output ref="docNo">
+						<xf:label>Invoice No.</xf:label>
+					</xf:output>
+				</td>
+				<td exfk:sortable="true">
+					<xf:output ref="data">
+						<xf:label>Date</xf:label>
+					</xf:output>
+				</td>
+				<td exfk:width="400" exfk:sortable="true">
+					<xf:output ref="nume">
+						<xf:label>Supplier Name (editable)</xf:label>
+					</xf:output>
+				</td>
+				<td exfk:sortable="true" exfk:formatter="formatter2">
+					<xf:output ref="amount">
+						<xf:label>Invoice value</xf:label>
+					</xf:output>
+				</td>
+			</tr>
+			<xf:extension>
+				<exfk:formatters>
+					<exfk:formatter name="formatter1">
+						<exfk:definition>
+							function(o) {
+							return o.rowIndex + 1;
+							}
+						</exfk:definition>
+					</exfk:formatter>
+					<exfk:formatter name="formatter2">
+						<exfk:definition>
+							function(o) {
+							return "$" + o.value;
+							}
+						</exfk:definition>
+					</exfk:formatter>
+				</exfk:formatters>
+				<exfk:paginator rowsPerPage="3" />
+			</xf:extension>
+		</table>
+		<div id="example"></div>
+	</body>
+</html>

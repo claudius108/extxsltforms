@@ -258,6 +258,7 @@ function eXSLTForms_xslt(xmlString, xslPath, parametersXNode) {
 			}
 		} else {}
 		xsltProcessor.transform();
+		
 		return xsltProcessor.output;
 	}
 }

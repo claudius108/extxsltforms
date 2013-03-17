@@ -28,6 +28,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
     <xsl:variable name="exsltformsConfigOptions">
         <xsl:copy-of select="document('../config/exsltforms-config.xml')/*"/>
     </xsl:variable>
+    
     <xsl:template name="exsltforms">
         <xsl:variable name="exsltformsBaseURI">
 		<xsl:choose>
@@ -70,28 +71,38 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
         <xsl:if test="//xforms:textarea[starts-with(@appearance, 'exfk:YUI')] | //xhtml:table[starts-with(@appearance, 'exfk:YUI')]">
 		<!--load YUI 3 config file-->
             <xsl:variable name="YUI3-config-options" select="document('../config/yui-config.xml')/config-options"/>
-            <script type="text/javascript" src="{$YUI3-config-options/YUI3-seed-URI}" charset="utf-8">/**/</script>
+            <script type="text/javascript" src="{$YUI3-config-options/yui3-seed-url}" charset="utf-8">/**/</script>
             <script type="text/javascript" charset="utf-8">
-			exsltforms.registry[ 'YUI2in3base' ] = '<xsl:value-of select="$YUI3-config-options/YUI2in3-base"/>';
-			var YGlobal = YUI({
-				filter: 'debug',
-				groups: {
-					yui2: {
-						base: exsltforms.registry.YUI2in3base,
-						patterns:  {
-							'yui2-': {
-							configFn: function(me) {
-								if(/-skin|reset|fonts|grids|base/.test(me.name)) {
-								me.type = 'css';
-								me.path = me.path.replace(/\.js/, '.css');
-								me.path = me.path.replace(/\/yui2-skin/, '/assets/skins/sam/yui2-skin');
-								}
-							}
-							}
-						}
-					}
-				}
-			});
+<!-- 				YUI().use('datatable', function (Y) { -->
+<!-- 				    // DataTable is available and ready for use. Add implementation -->
+<!-- 				    // code here. -->
+<!-- 				}); -->
+
+				
+							
+				
+				           
+            
+<!-- 			exsltforms.registry[ 'YUI2in3base' ] = '<xsl:value-of select="$YUI3-config-options/yui2in3-base-url"/>'; -->
+<!-- 			var YGlobal = YUI({ -->
+<!-- 				filter: 'debug', -->
+<!-- 				groups: { -->
+<!-- 					yui2: { -->
+<!-- 						base: exsltforms.registry.YUI2in3base, -->
+<!-- 						patterns:  { -->
+<!-- 							'yui2-': { -->
+<!-- 							configFn: function(me) { -->
+<!-- 								if(/-skin|reset|fonts|grids|base/.test(me.name)) { -->
+<!-- 								me.type = 'css'; -->
+<!-- 								me.path = me.path.replace(/\.js/, '.css'); -->
+<!-- 								me.path = me.path.replace(/\/yui2-skin/, '/assets/skins/sam/yui2-skin'); -->
+<!-- 								} -->
+<!-- 							} -->
+<!-- 							} -->
+<!-- 						} -->
+<!-- 					} -->
+<!-- 				} -->
+<!-- 			}); -->
 		</script>
         </xsl:if>
     </xsl:template>
@@ -111,18 +122,15 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 		<xsl:param name="parentworkid"/>
 		<xsl:param name="workid" select="concat(position(),'_',$parentworkid)"/>
         <xsl:variable name="idInsertElem" select="concat('xsltforms_insert_transform_', $workid)"/>
-        <xsl:variable name="idDeleteElem" select="concat('xsltforms_delete_transform_', $workid)"/>
-        <xsl:variable name="paramAttr">
-        	<xsl:call-template name="toScriptBinding"><xsl:with-param name="p" select="@param"/></xsl:call-template>
-        </xsl:variable>       
+        <xsl:variable name="idDeleteElem" select="concat('xsltforms_delete_transform_', $workid)"/>      
         <xsl:apply-templates select="@*" mode="scriptattr"/>
 		<xsl:if test="@param">
 			<xsl:variable name="kxexprs">
-			<xexprs xmlns="">
-				<xexpr>
-					<xsl:value-of select="@param"/>
-				</xexpr>
-			</xexprs>
+				<xexprs xmlns="">
+					<xexpr>
+						<xsl:value-of select="@param"/>
+					</xexpr>
+				</xexprs>
 			</xsl:variable>
 			<xsl:choose>
 				<xsl:when test="function-available('xalan:nodeset')">
@@ -245,137 +253,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 	</script>
     </xsl:template>
     
-    <xsl:template match="xhtml:table[starts-with(@appearance, 'exfk:')]" mode="script">
-        <xsl:variable name="kxexprs">
-            <xexprs>
-                <xexpr>
-                    <xsl:value-of select="@xforms:repeat-nodeset"/>
-                </xexpr>
-            </xexprs>
-        </xsl:variable>
-        <xsl:call-template name="xps">
-            <xsl:with-param name="ps" select="exslt:node-set($kxexprs)/xexprs"/>
-        </xsl:call-template>
-    </xsl:template>
-    <xsl:template match="xhtml:table[@appearance = 'exfk:YUI2-DataTable']">
-        <xsl:variable name="elementID">
-            <xsl:choose>
-                <xsl:when test="@id">
-                    <xsl:value-of select="@id"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of select="generate-id(.)"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-        <div id="{$elementID}"/>
-        <div id="{$elementID}_contextmenu"/>
-        <script type="text/javascript" charset="utf-8">
-            <xsl:variable name="kxexprs">
-                <xexprs xmlns="">
-                    <xexpr>
-                        <xsl:value-of select="@xforms:repeat-nodeset"/>
-                    </xexpr>
-                </xexprs>
-            </xsl:variable>
-            <xsl:variable name="modelID" select="@model"/>
-            <xsl:call-template name="xps">
-                <xsl:with-param name="ps" select="exslt:node-set($kxexprs)/xexprs"/>
-            </xsl:call-template>
-		YGlobal.use( 'yui2-datatable', 'datatype', 'yui2-datasource', 'yui2-paginator', 'yui2-menu', function (Y) {
-			var YAHOO = Y.YUI2,
-				datatables = exsltforms.registry.datatables,
-				datasources = exsltforms.registry.datasources;
-
-			//define formatters
-			<xsl:for-each select="xforms:extension/exfk:formatters/exfk:formatter">
-				var <xsl:value-of select="@name"/> = <xsl:value-of select="normalize-space(exfk:definition)"/>;
-				YAHOO.widget.DataTable.Formatter.<xsl:value-of select="@name"/> = <xsl:value-of select="@name"/>;
-			</xsl:for-each>
-			//define editors
-			<xsl:for-each select="xforms:extension/exfk:editors/exfk:editor">
-				var <xsl:value-of select="@name"/> = <xsl:value-of select="normalize-space(exfk:definition)"/>;
-			</xsl:for-each>		
-			//define columns
-			var myColumnDefs = [
-				<xsl:for-each select="xhtml:tr/xhtml:td">
-					{
-						key:"<xsl:value-of select="xforms:*/@ref"/>",
-						<xsl:for-each select="@*">
-                    <xsl:value-of select="concat(substring-after(name(), 'exfk:'), ':', ., ',')"/>
-                </xsl:for-each>
-						label:"<xsl:value-of select=".//xforms:label"/>"
-					},
-				</xsl:for-each>
-			];
-
-			//define datatable configurations
-			var oConfigs = { initialRequest: "" };
-			<xsl:if test="xforms:extension/exfk:paginator">
-				oConfigs[ 'paginator' ] = new YAHOO.widget.Paginator({
-					<xsl:for-each select="xforms:extension/exfk:paginator/@*">
-                    <xsl:value-of select="concat(name(), ': ', ., ',')"/>
-                </xsl:for-each>
-				});
-			</xsl:if>
-            <xsl:if test="xhtml:caption">
-				oConfigs[ 'caption' ] = "<xsl:value-of select="normalize-space(xhtml:caption)"/>";
-			</xsl:if>
-
-			//define datasource
-			var nodesetPath = "<xsl:value-of select="@xforms:repeat-nodeset"/>",
-				resultListLocatorName = nodesetPath.substring( nodesetPath.lastIndexOf( "/" ) + 1 ),
-				myDataSource = new YAHOO.util.DataSource();
-			myDataSource.responseType = YAHOO.util.DataSource.TYPE_XML;
-			myDataSource.responseSchema = {
-				resultNode: resultListLocatorName,
-				fields: [ 
-					<xsl:for-each select="xhtml:tr/xhtml:td[./xforms:*/@ref]">
-						'<xsl:value-of select="xforms:*/@ref"/>',
-					</xsl:for-each>
-				]
-			};
-		
-			//setting the datatable
-			var myDataTable = new YAHOO.widget.DataTable( "<xsl:value-of select="$elementID"/>", myColumnDefs, myDataSource, oConfigs );
-			myDataTable.showTableMessage( "Loading ..." );
-
-//TO DO:		//setting of events produced by click on a button inside datatable				
-			
-			// Enable inline cell editing
-			<xsl:if test="xforms:extension/exfk:editors">
-				myDataTable.subscribe("cellClickEvent", myDataTable.onEventShowCellEditor);
-			</xsl:if>
-		
-//TO DO:		//setting of context menu							
-
-			//registering myDataTable and myDataSource in exsltforms registry
-			datatables[ '<xsl:value-of select="$elementID"/>' ] = myDataTable;
-			datasources[ '<xsl:value-of select="$elementID"/>' ] = myDataSource;
-
-			//get data
-			exsltforms.utils.pollingConditions[ 'get-<xsl:value-of select="$elementID"/>-source' ] = {
-				testedValue: function() { return ( xforms.defaultModel != null ) },
-				executedFunction: function() {
-					var sourceString = "",
-						sourceBinding = new Binding( false, nodesetPath );
-					for ( i = 0, il = ( sourceBinding.evaluate() ).length; i &lt; il; i++) {
-						sourceString += Writer.toString( sourceBinding.evaluate()[ i ] );
-					} 
-					var liveData = Y.DataType.XML.parse( "&lt;liveData&gt;" + sourceString.replace( new RegExp( ' xmlns=""', 'gi' ), "" ) + "&lt;/liveData&gt;" );
-					datatables[ '<xsl:value-of select="$elementID"/>' ].getDataSource().liveData = liveData;
-					datatables[ '<xsl:value-of select="$elementID"/>' ].getDataSource().sendRequest( "", {
-						success: datatables[ '<xsl:value-of select="$elementID"/>' ].onDataReturnInitializeTable,
-						scope: datatables[ '<xsl:value-of select="$elementID"/>' ],
-						argument: datatables[ '<xsl:value-of select="$elementID"/>' ]
-					});
-				}
-			};
-			exsltforms.utils.poll( 'get-<xsl:value-of select="$elementID"/>-source' );
-			
-		});
-	</script>
-    </xsl:template>
     <xsl:template match="xhtml:table[@appearance = 'exfk:YUI3-DataTable']">
         <xsl:variable name="elementID">
             <xsl:choose>
@@ -387,112 +264,139 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        <div id="{$elementID}"/>
+        <div id="{$elementID}"></div>
         <script type="text/javascript" charset="utf-8">
-            <xsl:variable name="kxexprs">
-                <xexprs>
+            <xsl:variable name="xexpr">
                     <xexpr>
-                        <xsl:value-of select="@xforms:repeat-nodeset"/>
+                        <xsl:value-of select="@xforms:repeat-ref"/>
                     </xexpr>
-                </xexprs>
             </xsl:variable>
-            <xsl:call-template name="xps">
-                <xsl:with-param name="ps" select="exslt:node-set($kxexprs)/xexprs"/>
-            </xsl:call-template>
-		YGlobal.use( 'datatype', 'datatable-base', 'datatable-datasource', 'datasource-local', 'datasource-xmlschema', 'datatable-sort', function (Y) {
-			var datatables = exsltforms.registry.datatables;
-			var datasources = exsltforms.registry.datasources;
-
-			//define formatters
-			<xsl:for-each select="xforms:extension/exfk:formatters/exfk:formatter">
-				var <xsl:value-of select="@name"/> = <xsl:value-of select="normalize-space(exfk:definition)"/>;
-			</xsl:for-each>
-			//define editors
-			<xsl:for-each select="xforms:extension/exfk:editors/exfk:editor">
-				var <xsl:value-of select="@name"/> = <xsl:value-of select="normalize-space(exfk:definition)"/>;
-			</xsl:for-each>
-
-			//define columns
-			var myColumnDefs = [
-				<xsl:for-each select="xhtml:tr/xhtml:td">
-					{
-						key:"<xsl:value-of select="xforms:*/@ref"/>",
-						<xsl:for-each select="@*">
-                    <xsl:value-of select="concat(substring-after(name(), 'exfk:'), ':', ., ',')"/>
-                </xsl:for-each>
-						label:"<xsl:value-of select=".//xforms:label"/>"
-					},
+			YUI().use('datatable-datasource', 'datasource-local', 'datasource-xmlschema', 'datatable-sort', 'recordset-base', function (Y) {
+				var datatables = exsltforms.registry.datatables;
+				var datasources = exsltforms.registry.datasources;
+	
+				//define formatters
+				<xsl:for-each select="xforms:extension/exfk:formatters/exfk:formatter">
+					var <xsl:value-of select="@name"/> = <xsl:value-of select="normalize-space(exfk:definition)"/>;
+					//Y.DataTable.BodyView.Formatters.<xsl:value-of select="@name"/> = <xsl:value-of select="@name"/>;
 				</xsl:for-each>
-			];
-			//define datasource and dataschema
-			var nodesetPath = "<xsl:value-of select="@xforms:repeat-nodeset"/>";
-			var resultListLocatorName = nodesetPath.substring( nodesetPath.lastIndexOf( "/" ) + 1 );
-			var myDataSource = new Y.DataSource.Local();
-			myDataSource.plug(Y.Plugin.DataSourceXMLSchema, {
-				schema: {
-//TO DO: to generalize resultListLocator
-					resultListLocator: resultListLocatorName,
-					resultFields: [
-					<xsl:for-each select="xhtml:tr/xhtml:td[./xforms:*/@ref]">
-                <xsl:variable name="ref" select="xforms:*/@ref"/>
-						{ key: "<xsl:value-of select="$ref"/>", locator: "<xsl:value-of select="$ref"/>" },
+				//define editors
+				<xsl:for-each select="xforms:extension/exfk:editors/exfk:editor">
+					var <xsl:value-of select="@name"/> = <xsl:value-of select="normalize-space(exfk:definition)"/>;
+				</xsl:for-each>
+	
+				//define columns
+				var columns = [
+					<xsl:for-each select="xhtml:tr/xhtml:td">
+						{
+							key: "<xsl:value-of select="xforms:*/@ref"/>",
+							<xsl:for-each select="@*">
+								<xsl:value-of select="concat(substring-after(name(), 'exfk:'), ': ', ., ', ')"/>
+							</xsl:for-each>
+							label: "<xsl:value-of select=".//xforms:label"/>"
+						},
 					</xsl:for-each>
-					]
-				}
-			});
+				];
+				var sortableColumns = [
+					<xsl:for-each select="xhtml:tr/xhtml:td[@exfk:sortable]">
+						"<xsl:value-of select="xforms:*/@ref"/>",
+					</xsl:for-each>
+				];
 				
-			//setting the datatable
-			var myDataTable = new Y.DataTable.Base({
-				columnset: myColumnDefs
-				<xsl:if test="xhtml:caption">
-					,caption: "<xsl:value-of select="xhtml:caption"/>"
-				</xsl:if>				
-			});
-			myDataTable.plug( Y.Plugin.DataTableDataSource, {
-				datasource: myDataSource
-			}).render("#<xsl:value-of select="$elementID"/>");
-//TO DO: sorting to be made by the clicked column
-			<xsl:if test="xhtml:tr/xhtml:td[@exfk:sortable = 'true']">
-				//myDataTable.plug( Y.Plugin.DataTableSort );
-				//workaround for table sort
-				myDataTable.datasource.onDataReturnInitializeTable = function (e) {
-					this.get("host").set("recordset", new Y.Recordset( { records: e.response.results} ) );
-					this.get("host").plug( Y.Plugin.DataTableSort, {
-						lastSortedBy: {
-							field: "<xsl:value-of select="xhtml:tr/xhtml:td[@exfk:sortable = 'true']/xforms:*/@ref"/>",
-							dir: "asc"
+				//define datasource and dataschema
+				var nodesetPath = "<xsl:value-of select="@xforms:repeat-ref"/>";
+				var resultListLocatorName = nodesetPath.substring(nodesetPath.lastIndexOf( "/" ) + 1);
+				var myDataSource = new Y.DataSource.Local();
+				myDataSource.responseType = Y.DataSource.TYPE_XML;
+				myDataSource.plug(Y.Plugin.DataSourceXMLSchema, {
+					schema: {
+						//TO DO: to generalize resultListLocator
+						resultListLocator: resultListLocatorName,
+						resultFields: [
+						<xsl:for-each select="xhtml:tr/xhtml:td[./xforms:*/@ref]">
+	                			<xsl:variable name="ref" select="xforms:*/@ref"/>
+							{key: "<xsl:value-of select="$ref"/>", locator: "<xsl:value-of select="$ref"/>"},
+						</xsl:for-each>
+						]
+					}
+				});
+					
+				//setting the datatable
+				var myDataTable = new Y.DataTable({
+					columnset: columns
+					<xsl:if test="xhtml:caption">
+						,caption: "<xsl:value-of select="xhtml:caption"/>"
+					</xsl:if>
+					,sortable: sortableColumns
+				});			
+				myDataTable.plug(Y.Plugin.DataTableDataSource, {
+					datasource: myDataSource
+				}).render("#<xsl:value-of select="$elementID"/>");
+				//TO DO: sorting to be made by the clicked column
+				<xsl:if test="xhtml:tr/xhtml:td[@exfk:sortable = 'true']">
+					//myDataTable.plug(Y.Plugin.DataTableSort);
+					//workaround for table sort
+					myDataTable.datasource.onDataReturnInitializeTable = function (e) {
+						this.get("host").set("recordset", new Y.Recordset({records: e.response.results}));
+						this.get("host").plug(Y.Plugin.DataTableSort, {
+							lastSortedBy: {
+								field: "<xsl:value-of select="xhtml:tr/xhtml:td[@exfk:sortable = 'true']/xforms:*/@ref"/>",
+								dir: "asc"
+							}
+						});
+					}
+				</xsl:if>
+	
+				// Enable inline cell editing
+				<xsl:if test="xforms:extension/exfk:editors">
+					myDataTable.on("cellClickEvent", myDataTable.onEventShowCellEditor);
+				</xsl:if>
+	
+				//registering myDataTable and myDataSource in exsltforms registry
+				datatables[ '<xsl:value-of select="$elementID"/>' ] = myDataTable;
+				datasources[ '<xsl:value-of select="$elementID"/>' ] = myDataSource;
+				
+				//get data
+				exsltforms.utils.pollingConditions[ 'get-<xsl:value-of select="$elementID"/>-source' ] = {
+					testedValue: function() {return (XsltForms_globals.ready)},
+					executedFunction: function() {
+						<xsl:call-template name="expath"><xsl:with-param name="xp" select="exslt:node-set($xexpr)/xexpr"/><xsl:with-param name="nms" select="''"/></xsl:call-template>					
+						var sourceString = "";
+						var model = '<xsl:value-of select="@model"/>';
+						model = model ? model : XsltForms_globals.models[1].element.id;
+																		
+						var sourceBinding = (new XsltForms_binding(null, nodesetPath, model)).evaluate();
+						for ( i = 0, il = sourceBinding.length; i &lt; il; i++) {
+							sourceString += XsltForms_browser.saveXML(sourceBinding[i]);
 						}
-					});
-				}
-			</xsl:if>
-
-			// Enable inline cell editing
-			<xsl:if test="xforms:extension/exfk:editors">
-				myDataTable.on("cellClickEvent", myDataTable.onEventShowCellEditor);
-			</xsl:if>
-
-			//registering myDataTable and myDataSource in exsltforms registry
-			datatables[ '<xsl:value-of select="$elementID"/>' ] = myDataTable;
-			datasources[ '<xsl:value-of select="$elementID"/>' ] = myDataSource;
-			//get data
-			exsltforms.utils.pollingConditions[ 'get-<xsl:value-of select="$elementID"/>-source' ] = {
-				testedValue: function() { return ( xforms.ready ) },
-				executedFunction: function() {
-					var sourceString = "";
-//TO DO: pick up the table's model also	
-					var sourceBinding = new Binding( false, nodesetPath, xforms.defaultModel );
-					for ( i = 0, il = ( sourceBinding.evaluate() ).length; i &lt; il; i++) {
-						sourceString += Writer.toString( sourceBinding.evaluate()[ i ] );
-					} 
-					var liveData = Y.DataType.XML.parse( "&lt;liveData&gt;" + sourceString.replace( new RegExp( ' xmlns=""', 'gi' ), "" ) + "&lt;/liveData&gt;" );
-					datasources[ '<xsl:value-of select="$elementID"/>' ].set("source", liveData);
-					datatables[ '<xsl:value-of select="$elementID"/>' ].datasource.load();
-				}
-			};
-			exsltforms.utils.poll( 'get-<xsl:value-of select="$elementID"/>-source' );
+						//alert(sourceString);
+						var liveData = Y.DataType.XML.parse("&lt;liveData&gt;" + sourceString.replace( new RegExp( ' xmlns=""', 'gi' ), "" ) + "&lt;/liveData&gt;");
+						datasources[ '<xsl:value-of select="$elementID"/>' ].set('source', liveData);
+						datatables[ '<xsl:value-of select="$elementID"/>' ].datasource.load();						
+					}
+				};
+				exsltforms.utils.poll( 'get-<xsl:value-of select="$elementID"/>-source' );
 
 		});
 	</script>
     </xsl:template>
+    
     <xsl:template match="xhtml:table[starts-with(@appearance, 'exfk:')]/xhtml:tr/xhtml:td/xforms:*" mode="script" priority="2"/>
+    
+	  <xsl:template name="expath">
+			<xsl:param name="xp"/>
+			<xsl:param name="nms"/>
+			<xsl:param name="main"/>
+			<xsl:variable name="xp2jsres"><xsl:call-template name="xp2js"><xsl:with-param name="xp" select="$xp"/></xsl:call-template></xsl:variable>
+			<xsl:variable name="xp2jsres2">
+				<xsl:choose>
+					<xsl:when test="contains($xp2jsres,'~~~~')">"<xsl:value-of select="substring-after(translate(substring-before(concat($xp2jsres,'~#~#'),'~#~#'),'&#34;',''),'~~~~')"/> in '<xsl:value-of select="$xp"/>'"</xsl:when>
+					<xsl:when test="$xp2jsres != ''"><xsl:value-of select="$xp2jsres"/></xsl:when>
+					<xsl:otherwise>"Unrecognized expression '<xsl:value-of select="$xp"/>'"</xsl:otherwise>
+				</xsl:choose>
+			</xsl:variable>
+			<xsl:variable name="result">XsltForms_xpath.create(XsltForms_globals.body.xfSubform,"<xsl:call-template name="toXPathExpr"><xsl:with-param name="p" select="$xp"/></xsl:call-template>",<xsl:call-template name="unordered"><xsl:with-param name="js" select="$xp2jsres"/></xsl:call-template>,<xsl:value-of select="$xp2jsres2"/><xsl:call-template name="js2ns"><xsl:with-param name="js" select="$xp2jsres"/><xsl:with-param name="nms" select="$nms"/></xsl:call-template>);</xsl:variable>
+			<xsl:value-of select="$result"/><xsl:text>
+</xsl:text>
+	  </xsl:template>    
 </xsl:stylesheet>
