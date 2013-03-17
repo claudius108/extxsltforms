@@ -6,6 +6,4 @@
 <config-options>
 	<!--set the URI to the YUI 3 seed file URI, namely 'yui-min.js' file-->
 	<yui3-seed-url>http://yui.yahooapis.com/3.9.0/build/yui/yui-min.js</yui3-seed-url>
-	<!--set the URI to the YUI2in3 folder-->
-	<yui2in3-base-url>http://yui.yahooapis.com/2in3.0/</yui2in3-base-url>
 </config-options>
