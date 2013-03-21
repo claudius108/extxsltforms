@@ -83,6 +83,8 @@
 								<copy todir="${xsltforms-dir-path}">
 									<fileset dir="${js-libs-dir-path}/xsltforms" />
 								</copy>
+								<echo>Create xsltforms archive in local maven repo</echo>
+								<zip destfile="${user.home}/.m2/repository/ro/kuberam/maven/xsltforms/xsltforms.zip" basedir="${basedir}/tests/resources/xsltforms" />
 							</target>
 						</configuration>
 					</execution>
