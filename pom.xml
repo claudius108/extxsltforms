@@ -104,7 +104,7 @@
 							<serverId>sourceforge</serverId>
 							<fromFile>${project-archive-path}</fromFile>
 							<toFile>${project.artifactId}-latest.zip</toFile>
-							<url>${sourceforge-kuberam-web-url}/maven/ro/kuberam/xsltforms</url>
+							<url>${sourceforge-user-web-url}/maven/ro/kuberam/xsltforms</url>
 						</configuration>
 					</execution>
 				</executions>
